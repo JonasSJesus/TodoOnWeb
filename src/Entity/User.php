@@ -9,7 +9,7 @@ class User
     public readonly string $email;
     public readonly ?string $password;
     public readonly bool $is_admin;
-    public function __construct(string $name, string $email, bool $is_admin, ?string $password = null)
+    public function __construct(string $name, string $email, ?string $password = null, bool $is_admin = false)
     {
         $this->name = $name;
         $this->email = $email;

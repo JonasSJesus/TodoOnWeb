@@ -6,6 +6,8 @@ use Todo\Controller\UserController;
 use Todo\Repository\TaskRepository;
 use Todo\Repository\UserRepository;
 
+session_start();
+
 require_once __DIR__ . '/../vendor/autoload.php';
 $dbPath = __DIR__ . '/../db.sqlite';
 $pdo = new PDO("sqlite:$dbPath");
@@ -17,8 +19,8 @@ $userRepository = new UserRepository($pdo);
 $taskRepository = new TaskRepository($pdo);
 
 $adminController = new AdminController($userRepository);
-$taskController = new TaskController();
-#$userController = new UserController($userRepository);
+$taskController = new TaskController($taskRepository);
+$userController = new UserController($userRepository);
 
 switch ($path) {
     case '/':
@@ -28,16 +30,20 @@ switch ($path) {
         $adminController->request();
         break;
     case '/user':
-        $userController->userPage();
+        $taskController->userPage();
         break;
     case '/minha-conta':
         echo 'nice';
         break;
-    case '/registrar':
-        require_once __DIR__ . '/../view/register.php';
+    case '/cadastro':
+        if ($method == 'GET'){
+            $userController->userCadForm();
+        } elseif ($method == 'POST'){
+            $userController->addUser();
+        }
         break;
     case '/login':
-        require_once __DIR__ . '/../view/login.php';
+        $userController->userLoginForm();
         break;
     default:
         echo "<script>alert('página não encontrada!')</script>";

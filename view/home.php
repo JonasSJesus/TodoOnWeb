@@ -1,23 +1,4 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To Do App - Página Inicial</title>
-    <link rel="stylesheet" href="./css/styles.css">
-</head>
-<body>
-    <header>
-        <h1>To Do App</h1>
-    </header>
-    <nav>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="user.html">Minha Conta</a></li>
-            <li><a href="login.html">Login/Cadastro</a></li>
-            <li><a href="admin.html">Admin</a></li>
-        </ul>
-    </nav>
+    <?php require_once 'header.php'; ?>
     <div class="container">
         <h2>Lista de Tarefas</h2>
         <div class="task">

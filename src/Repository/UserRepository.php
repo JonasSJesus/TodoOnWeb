@@ -30,8 +30,27 @@ class UserRepository
         return array_map($this->hydrateUser(...), $users);
     }
 
-    /*public function add(User $user): bool
+    public function findByEmail($email): User
     {
-        $this->pdo->prepare('');
-    }*/
+        $stmt = $this->pdo->prepare('
+            SELECt * FROM users WHERE email = ?;
+        ');
+        $stmt->bindValue(1, $email);
+        $stmt->execute();
+
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $this->hydrateUser($user);
+    }
+
+    public function add(User $user): bool
+    {
+        $stmt = $this->pdo->prepare('
+            INSERT INTO users (name, email, password) VALUES (?, ?, ?)');
+        $stmt->bindValue(1, $user->name);
+        $stmt->bindValue(2, $user->email);
+        $stmt->bindValue(3, $user->password);
+
+        return $stmt->execute();
+    }
 }
