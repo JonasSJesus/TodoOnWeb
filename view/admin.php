@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To Do App - Administração</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
     <header>
@@ -12,10 +12,10 @@
     </header>
     <nav>
         <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="user.html">Minha Conta</a></li>
-            <li><a href="login.html">Login/Cadastro</a></li>
-            <li><a href="admin.html">Admin</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/user">Minha Conta</a></li>
+            <li><a href="/login">Login/Cadastro</a></li>
+            <li><a href="/admin">Admin</a></li>
         </ul>
     </nav>
     <div class="container">
@@ -29,26 +29,19 @@
                     <th>Ações</th>
                 </tr>
             </thead>
+            <?php foreach($users as $user): ?>
             <tbody>
                 <tr>
-                    <td>1</td>
-                    <td>João Silva</td>
-                    <td>joao@example.com</td>
-                    <td>
-                        <a href="#">Editar</a> |
-                        <a href="#">Excluir</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Maria Santos</td>
-                    <td>maria@example.com</td>
+                <td><?= $user->id; ?></td>
+                    <td><?= $user->name; ?></td>
+                    <td><?= $user->email; ?></td>
                     <td>
                         <a href="#">Editar</a> |
                         <a href="#">Excluir</a>
                     </td>
                 </tr>
             </tbody>
+            <?php endforeach; ?>
         </table>
 
         <h2>Gerenciar Tarefas</h2>

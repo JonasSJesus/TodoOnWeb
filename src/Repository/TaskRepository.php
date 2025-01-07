@@ -24,12 +24,21 @@ class TaskRepository
         return $stmt->execute();
     }
 
+    public function hydrate(array $data): Task
+    {
+
+    }
+
     public function all(): array
     {
         $stmt = $this->pdo->query(
             'SELECT * FROM tasks;'
         );
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        return $this->hydrate($data);
     }
+
+
 }

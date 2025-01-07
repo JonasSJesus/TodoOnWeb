@@ -12,7 +12,7 @@
     </header>
     <nav>
         <ul>
-            <li><a href="index.html">Home</a></li>
+            <li><a href="home.php">Home</a></li>
             <li><a href="user.html">Minha Conta</a></li>
             <li><a href="login.html">Login/Cadastro</a></li>
             <li><a href="admin.html">Admin</a></li>
@@ -21,7 +21,7 @@
     <div class="container">
         <h2>Minha Conta</h2>
         <h3>Adicionar Nova Tarefa</h3>
-        <form action="index.html" method="get">
+        <form action="home.php" method="get">
             <input type="text" name="description" placeholder="Descrição da Tarefa" required>
             <input type="date" name="creation_date" required>
             <input type="date" name="completion_date" required>

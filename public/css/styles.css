@@ -7,10 +7,10 @@ body {
 }
 
 .container {
-    width: 80%;
+    width: 50%;
     margin: auto;
     overflow: hidden;
-    padding: 20px;
+    padding: 40px;
 }
 
 header {
@@ -55,7 +55,7 @@ nav ul li a {
 form {
     background: #fff;
     border: 1px solid #ddd;
-    padding: 20px;
+    padding: 50px;
     margin-bottom: 20px;
 }
 
