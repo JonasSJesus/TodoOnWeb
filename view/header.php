@@ -17,5 +17,6 @@
             <li><a href="/login">Login</a></li>
             <li><a href="/cadastro">Cadastro</a></li>
             <li><a href="/admin">Admin</a></li>
+            <?php var_dump($_SESSION['nome']); ?>
         </ul>
     </nav>

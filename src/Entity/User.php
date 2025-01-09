@@ -8,8 +8,8 @@ class User
     public readonly string $name;
     public readonly string $email;
     public readonly ?string $password;
-    public readonly bool $is_admin;
-    public function __construct(string $name, string $email, ?string $password = null, bool $is_admin = false)
+    public readonly int $is_admin;
+    public function __construct(string $name, string $email, ?string $password = null, int $is_admin = 0)
     {
         $this->name = $name;
         $this->email = $email;

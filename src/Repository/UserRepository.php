@@ -16,7 +16,7 @@ class UserRepository
 
     private function hydrateUser(array $data): User
     { 
-        $user = new User($data['name'], $data['email'], $data['is_admin']);
+        $user = new User($data['name'], $data['email'], $data['password'], $data['is_admin']);
         $user->setId($data['id']);
 
         return $user;
