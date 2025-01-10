@@ -1,4 +1,4 @@
-    <?php require_once 'header.php'; ?>
+    <?php include_once 'Includes/header.php'; ?>
     <main class="container">
         <h2>Editar Usuário</h2>
         <form action="admin.html" method="get">

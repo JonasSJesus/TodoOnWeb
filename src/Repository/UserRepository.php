@@ -53,4 +53,11 @@ class UserRepository
 
         return $stmt->execute();
     }
+
+    public function update(User $user): bool
+    {
+        $stmt = $this->pdo->prepare('
+            UPDATE users 
+        ');
+    }
 }

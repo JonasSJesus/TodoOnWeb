@@ -24,35 +24,19 @@ $taskController = new TaskController($taskRepository);
 $userController = new UserController($userRepository);
 $authController = new AuthController($userRepository);
 
-
+$authController->requireAuth($path);
 
 switch ($path) {
-    case '/':
-        if(!$_SESSION['logado']){
-            header('Location: /login');
-            exit();
-        }
+    case '/': 
         $taskController->requestHome();
         break;
     case '/admin':
-        if(!$_SESSION['logado']){
-            header('Location: /login');
-            exit();
-        }
         $adminController->request();
         break;
     case '/user':
-        if(!$_SESSION['logado']){
-            header('Location: /login');
-            exit();
-        }
         $taskController->userPage();
         break;
     case '/minha-conta':
-        if(!$_SESSION['logado']){
-            header('Location: /login');
-            exit();
-        }
         echo 'nice';
         break;
     case '/cadastro':
@@ -66,8 +50,11 @@ switch ($path) {
         if ($method == 'GET'){
             $authController->userLoginForm();
         } elseif ($method == 'POST'){
-            $authController->createSession();
+            $authController->login();
         }
+        break;
+    case '/logout':
+        $authController->logout();
         break;
     default:
         echo "<script>alert('página não encontrada!')</script>";
