@@ -13,7 +13,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 $dbPath = __DIR__ . '/../db.sqlite';
 $pdo = new PDO("sqlite:$dbPath");
 
-$path = $_SERVER['REQUEST_URI'] ?? '/';
+$path = $_SERVER['PATH_INFO'] ?? '/';
 $method = $_SERVER['REQUEST_METHOD'];
 
 $userRepository = new UserRepository($pdo);
@@ -56,7 +56,11 @@ switch ($path) {
     case '/logout':
         $authController->logout();
         break;
+    case '/excluir-user':
+        $userController->DeleteUser();
     default:
-        echo "<script>alert('página não encontrada!')</script>";
+        require_once "logout.php";
+        #echo "página não encontrada!";
+        #header('Location: /');
         break;
 }

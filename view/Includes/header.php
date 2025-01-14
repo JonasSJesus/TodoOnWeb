@@ -14,9 +14,9 @@
         <ul>
             <li><a href="/">Home</a></li>
             <li><a href="/user">Minha Conta</a></li>
-            <li><a href="/login">Login</a></li>
-            <li><a href="/cadastro">Cadastro</a></li>
-            <li><a href="/admin">Admin</a></li>
-            <?php var_dump($_SESSION['nome']); ?>
+            <li><a href="/logout">Logout</a></li>
+            <li><a href="/cadastro"></a></li>
+            <li><a href="/admin"><?= $_SESSION['nome'] == 'Jonas' ? 'Admin' : ''; ?> </a></li>
+            <?php var_dump($_SESSION['nome']); ?> 
         </ul>
     </nav>

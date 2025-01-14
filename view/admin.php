@@ -18,7 +18,7 @@
                     <td><?= $user->email; ?></td>
                     <td>
                         <a href="#">Editar</a> |
-                        <a href="#">Excluir</a>
+                        <a href="/excluir-user?id=<?= $user->id ?>">Excluir</a>
                     </td>
                 </tr>
             </tbody>

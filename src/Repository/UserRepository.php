@@ -54,10 +54,25 @@ class UserRepository
         return $stmt->execute();
     }
 
-    public function update(User $user): bool
+    public function update(int $id, User $user): bool
     {
         $stmt = $this->pdo->prepare('
-            UPDATE users 
+            UPDATE users SET name = ?, email = ? WHERE id = ?;
         ');
+        $stmt->bindValue(1, $user->name);
+        $stmt->bindVAlue(2, $user->email);
+        $stmt->bindValue(3, $id);
+
+        return $stmt->execute();
     }
+
+    public function delete(int $id): bool
+    {
+        $stmt = $this->pdo->prepare("
+            DELETE FROM users WHERE id = ?;
+        ");
+        $stmt->bindValue(1, $id);
+
+        return $stmt->execute();
+    } 
 }

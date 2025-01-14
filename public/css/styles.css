@@ -7,10 +7,10 @@ body {
 }
 
 .container {
-    width: 50%;
+    width: 80%;
     margin: auto;
     overflow: hidden;
-    padding: 40px;
+    padding: 20px;
 }
 
 header {
@@ -55,7 +55,7 @@ nav ul li a {
 form {
     background: #fff;
     border: 1px solid #ddd;
-    padding: 50px;
+    padding: 20px;
     margin-bottom: 20px;
 }
 
@@ -97,4 +97,50 @@ th, td {
 
 th {
     background-color: #f2f2f2;
+}
+
+/* Styles for edit task page */
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="date"],
+select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+input[readonly] {
+    background-color: #f0f0f0;
+}
+
+.button {
+    display: inline-block;
+    background-color: #f44336;
+    color: white;
+    padding: 10px 15px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-left: 10px;
+}
+
+.button:hover {
+    background-color: #d32f2f;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }

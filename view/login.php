@@ -5,7 +5,7 @@
             <input type="email" name="email" placeholder="E-mail" required>
             <input type="password" name="password" placeholder="Senha" required>
             <input type="submit" value="Entrar">
-            <a href="/registrar" >Ou Registre-se aqui!</a>
+            <a href="/cadastro" >Ou Cadastre-se aqui!</a>
         </form>
     </div>
 </body>

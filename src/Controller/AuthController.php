@@ -12,7 +12,7 @@ class AuthController
     public function __construct(UserRepository $repository)
     {
         $this->repository = $repository;
-        session_start();
+        #session_start();
     }
 
     public function userCadForm(): void
@@ -66,7 +66,7 @@ class AuthController
         $_SESSION['logado'] = true;
         $_SESSION['email'] = $user->email;
         $_SESSION['nome'] = $user->name;
-        $_SESSION['id'] = $user->id;
+        #$_SESSION['id'] = $user->id;
         session_regenerate_id(true);
     }
 
