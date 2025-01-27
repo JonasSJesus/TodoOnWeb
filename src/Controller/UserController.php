@@ -25,7 +25,7 @@ class UserController
         }
     }
 
-    public function renderUpdatePg(): void
+    public function UpdatePage(): void
     {
         $id = $_GET['id'];
 
@@ -35,21 +35,23 @@ class UserController
 
     public function UpdateUser(): void
     {
-        $id = $_GET['id'];
-        $name = $_POST['name'];
-        $email = $_POST['email'];
-        $password = $_POST['password'];
+        $id = $_REQUEST['id'];
+        $name = $_REQUEST['name'];
+        $email = $_REQUEST['email'];
+        $role = $_REQUEST['role'];
+        $password = $_REQUEST['password'];
         $encrypted = password_hash($password, PASSWORD_BCRYPT);
-        $confirm_password = $_POST['confirm_password'];
+        $confirm_password = $_REQUEST['confirm_password'];
 
         if ($password !== $confirm_password){
             echo "<script>alert('as senhas não coincidem!')</script>";
             exit;
         }
 
-        $user = new User($name, $email, $encrypted);
-        var_dump($user);
+        $user = new User($name, $email, $encrypted, $role);
+        var_dump ($user);
         exit;
+        
         if($this->repository->update($id, $user)){
             header('Location: /admin?sucesso=1');
         } else {

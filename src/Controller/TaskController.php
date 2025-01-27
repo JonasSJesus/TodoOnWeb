@@ -23,9 +23,9 @@ class TaskController
         echo "adicionando task";
     }
 
-    public function userPage()
+    public function userTaskPage()
     {
-        $this->taskRepository->all();
+        #$this->taskRepository->all();
         require_once __DIR__ . '/../../view/user.php';
     }
 

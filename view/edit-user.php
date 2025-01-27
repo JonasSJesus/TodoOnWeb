@@ -1,10 +1,10 @@
     <?php include_once 'Includes/header.php'; ?>
     <main class="container">
         <h2>Editar Usuário</h2>
-        <form method="post">
+        <form method="post" action="/editar-user">
             <div>
                 <label for="user-id">ID do Usuário:</label>
-                <input type="text" id="user-id" name="user-id" value="<?= $user->id; ?>" readonly>
+                <input type="text" id="user-id" name="id" value="<?= $user->id; ?>" readonly>
             </div>
             <div>
                 <label for="name">Nome:</label>
@@ -25,8 +25,8 @@
             <div>
                 <label for="role">Função:</label>
                 <select id="role" name="role" required>
-                    <option value="user" <?= $user->is_admin == 0 ? 'selected' : '';  ?>>Usuário</option>
-                    <option value="admin" <?= $user->is_admin == 1 ? 'selected' : '';  ?>>Administrador</option>
+                    <option value="0" <?= $user->is_admin == 0 ? 'selected' : '';  ?>>Usuário</option>
+                    <option value="1" <?= $user->is_admin == 1 ? 'selected' : '';  ?>>Administrador</option>
                 </select>
             </div>
             <div>

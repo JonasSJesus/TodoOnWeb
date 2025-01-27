@@ -32,8 +32,11 @@ switch ($path) {
     case '/admin':
         $taskController->adminPage();
         break;
+    case '/tasks':
+        $taskController->userTaskPage();
+        break;
     case '/user':
-        $taskController->userPage();
+        $userController->updatePage();
         break;
     case '/minha-conta':
         echo 'nice';
@@ -60,7 +63,7 @@ switch ($path) {
         break;
     case '/editar-user':
         if ($method == 'GET'){
-            $userController->renderUpdatePg();
+            $userController->UpdatePage();
         } elseif ($method == 'POST'){
             $userController->UpdateUser();
         }

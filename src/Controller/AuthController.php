@@ -50,7 +50,7 @@ class AuthController
         $email = $_REQUEST['email'];
         $password = $_REQUEST['password'];
 
-        $user = $this->repository->findByEmail($email); 
+        $user = $this->repository->findByEmail($email);
 
         if (!$user or !password_verify($password, $user->password)){
             echo "<script>alert('Usuario ou senha incoretos!')</script>";
@@ -66,7 +66,8 @@ class AuthController
         $_SESSION['logado'] = true;
         $_SESSION['email'] = $user->email;
         $_SESSION['nome'] = $user->name;
-        #$_SESSION['id'] = $user->id;
+        $_SESSION['id'] = $user->id;
+        $_SESSION['is_admin'] = $user->is_admin == 1 ? true : false;
         session_regenerate_id(true);
     }
 

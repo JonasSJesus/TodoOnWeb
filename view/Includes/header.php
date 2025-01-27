@@ -13,10 +13,11 @@
     <nav>
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/user">Minha Conta</a></li>
+            <li><a href="/tasks">Minhas Tarefas</a></li>
+            <li><a href="/user?id=<?= $_SESSION['id']; ?>">Minha Conta</a></li>
             <li><a href="/logout">Logout</a></li>
             <li><a href="/cadastro"></a></li>
             <li><a href="/admin"><?= $_SESSION['nome'] == 'Jonas' ? 'Admin' : ''; ?> </a></li>
-            <?php var_dump($_SESSION['nome']); ?> 
+            <?php printf($_SESSION['nome']); ?> 
         </ul>
     </nav>
