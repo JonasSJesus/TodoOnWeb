@@ -4,7 +4,7 @@
         <form action="admin.html" method="get">
             <div>
                 <label for="user-id">ID do Usuário:</label>
-                <input type="text" id="user-id" name="user-id" value="1" readonly>
+                <input type="text" id="user-id" name="user-id" value="<?php $user ?>" readonly>
             </div>
             <div>
                 <label for="name">Nome:</label>
@@ -35,9 +35,7 @@
             </div>
         </form>
     </main>
-    <footer>
-        <p>&copy; 2023 To Do App. Todos os direitos reservados.</p>
-    </footer>
+
 </body>
 </html>
 

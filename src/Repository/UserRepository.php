@@ -33,7 +33,7 @@ class UserRepository
     public function findByEmail($email): User
     {
         $stmt = $this->pdo->prepare('
-            SELECt * FROM users WHERE email = ?;
+            SELECT * FROM users WHERE email = ?;
         ');
         $stmt->bindValue(1, $email);
         $stmt->execute();
@@ -41,6 +41,19 @@ class UserRepository
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
         return $this->hydrateUser($user);
+    }
+
+    public function findById(int $id)
+    {
+        $stmt = $this->pdo->prepare('
+        SELECT * FROM users WHERE id = ?;
+    ');
+    $stmt->bindValue(1, $id);
+    $stmt->execute();
+
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    return $this->hydrateUser($user);
     }
 
     public function add(User $user): bool

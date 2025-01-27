@@ -19,8 +19,7 @@ $method = $_SERVER['REQUEST_METHOD'];
 $userRepository = new UserRepository($pdo);
 $taskRepository = new TaskRepository($pdo);
 
-$adminController = new AdminController($userRepository);
-$taskController = new TaskController($taskRepository);
+$taskController = new TaskController($taskRepository, $userRepository);
 $userController = new UserController($userRepository);
 $authController = new AuthController($userRepository);
 
@@ -31,7 +30,7 @@ switch ($path) {
         $taskController->requestHome();
         break;
     case '/admin':
-        $adminController->request();
+        $taskController->adminPage();
         break;
     case '/user':
         $taskController->userPage();
@@ -58,6 +57,14 @@ switch ($path) {
         break;
     case '/excluir-user':
         $userController->DeleteUser();
+        break;
+    case '/editar-user':
+        if ($method == 'GET'){
+            $userController->renderUpdatePg();
+        } elseif ($method == 'POST'){
+            $userController->UpdateUser();
+        }
+        break;
     default:
         require_once "logout.php";
         #echo "página não encontrada!";
