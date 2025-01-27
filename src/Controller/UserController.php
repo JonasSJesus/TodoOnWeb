@@ -14,7 +14,7 @@ class UserController
         $this->repository = $repository;
     }
     
-    public function DeleteUser()
+    public function DeleteUser(): void
     {
         $id = $_GET['id'];
 
@@ -25,22 +25,31 @@ class UserController
         }
     }
 
-    public function renderUpdatePg()
+    public function renderUpdatePg(): void
     {
-        
+        $id = $_GET['id'];
 
-        $users = $this->repository->findByEmail($email);
+        $user = $this->repository->findById($id);
         require_once __DIR__ . "/../../view/edit-user.php";
     }
 
-    public function UpdateUser()
+    public function UpdateUser(): void
     {
         $id = $_GET['id'];
-        $name = $_GET['name'];
-        $email = $_GET['email'];
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $encrypted = password_hash($password, PASSWORD_BCRYPT);
+        $confirm_password = $_POST['confirm_password'];
 
-        $user = new User($name, $email);
+        if ($password !== $confirm_password){
+            echo "<script>alert('as senhas não coincidem!')</script>";
+            exit;
+        }
 
+        $user = new User($name, $email, $encrypted);
+        var_dump($user);
+        exit;
         if($this->repository->update($id, $user)){
             header('Location: /admin?sucesso=1');
         } else {

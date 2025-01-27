@@ -27,11 +27,11 @@ class AuthController
 
     public function addUser(): void
     {
-        $name = $_REQUEST['name'];
-        $email = $_REQUEST['email'];
-        $password = $_REQUEST['password'];
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
         $encrypted = password_hash($password, PASSWORD_BCRYPT);
-        $confirm_password = $_REQUEST['confirm_password'];
+        $confirm_password = $_POST['confirm_password'];
 
         if ($password !== $confirm_password){
             echo "<script>alert('as senhas não coincidem!')</script>";
