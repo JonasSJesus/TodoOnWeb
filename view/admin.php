@@ -1,4 +1,30 @@
     <?php include_once 'Includes/header.php'; ?>
+
+
+    <?php if (isset($_SESSION['update'])): ?>
+        <script>
+            Swal.fire({
+                title: "<?= $_SESSION['update']; ?>",
+                icon: "success",
+                draggable: true
+            });
+        </script>
+        <?php unset($_SESSION['update']); ?>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['updateError'])): ?>
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro!',
+                text: '<?= $_SESSION['updateError']; ?>',
+                confirmButtonColor: '#3085d6'
+            });
+        </script>
+        <?php unset($_SESSION['updateError']); ?>
+    <?php endif; ?>
+
+
     <div class="container">
         <h2>Gerenciar Usuários</h2>
         <table>

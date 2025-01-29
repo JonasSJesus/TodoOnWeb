@@ -34,4 +34,4 @@ $pdo = new PDO('sqlite:db.sqlite');
 require_once 'vendor/autoload.php';
 
 $userRepository = new UserRepository($pdo);
-var_dump($userRepository->all());
+var_dump($userRepository->findById(3));

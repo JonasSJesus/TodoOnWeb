@@ -40,22 +40,41 @@ class UserController
         $email = $_REQUEST['email'];
         $role = $_REQUEST['role'];
         $password = $_REQUEST['password'];
-        $encrypted = password_hash($password, PASSWORD_BCRYPT);
         $confirm_password = $_REQUEST['confirm_password'];
 
-        if ($password !== $confirm_password){
-            echo "<script>alert('as senhas não coincidem!')</script>";
+        if ($password !== $confirm_password) {
+            $_SESSION['sweet_alert'] = 'As senhas não coincidem!';
+            header("Location: /user?id=" . $id);
             exit;
         }
 
-        $user = new User($name, $email, $encrypted, $role);
-        var_dump ($user);
-        exit;
+        $user = new User($name, $email);
+        
+        if (!empty($password)) {
+            $encrypted = password_hash($password, PASSWORD_BCRYPT);    
+
+            $user->setPassword($encrypted);
+
+            if($this->repository->updatePWD($id, $user)){
+                $_SESSION['update'] = 'Usuário atualizado com sucesso!';
+                header('Location: /admin?sucesso=1');
+                exit;
+            } else {
+                $_SESSION['updateError'] = 'Erro ao atualizar o usuário!';
+                header("Location: /user?id=" . $id);
+                exit;
+            }
+        }
+
         
         if($this->repository->update($id, $user)){
+            $_SESSION['update'] = 'Usuário atualizado com sucesso!';
             header('Location: /admin?sucesso=1');
+            exit;
         } else {
-            header('Location: /admin?sucesso=0');
+            $_SESSION['updateError'] = 'Erro ao atualizar o usuário!';
+            header("Location: /user?id=" . $id);
+            exit;
         }
     }
 }

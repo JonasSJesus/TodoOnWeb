@@ -30,7 +30,7 @@ class UserRepository
         return array_map($this->hydrateUser(...), $users);
     }
 
-    public function findByEmail($email): User
+    public function findByEmail($email): User|null
     {
         $stmt = $this->pdo->prepare('
             SELECT * FROM users WHERE email = ?;
@@ -40,20 +40,28 @@ class UserRepository
 
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        return $this->hydrateUser($user);
+        if (is_array($user)) {
+            return $this->hydrateUser($user);
+        } else {
+            return null;
+        }
     }
 
-    public function findById(int $id)
+    public function findById(int $id): User|null
     {
         $stmt = $this->pdo->prepare('
         SELECT * FROM users WHERE id = ?;
-    ');
-    $stmt->bindValue(1, $id);
-    $stmt->execute();
+        ');
+        $stmt->bindValue(1, $id);
+        $stmt->execute();
 
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    return $this->hydrateUser($user);
+        if ($user) {
+            return $this->hydrateUser($user);
+        } else {
+            return null;
+        }
     }
 
     public function add(User $user): bool
@@ -62,11 +70,15 @@ class UserRepository
             INSERT INTO users (name, email, password) VALUES (?, ?, ?)');
         $stmt->bindValue(1, $user->name);
         $stmt->bindValue(2, $user->email);
-        $stmt->bindValue(3, $user->password);
+        $stmt->bindValue(3, $user->getPassword());
 
         return $stmt->execute();
     }
 
+
+    /*
+     * TODO!!!! usar transações para atualizar a senha no mesmo método --------------------------------------------------------
+     */
     public function update(int $id, User $user): bool
     {
         $stmt = $this->pdo->prepare('
@@ -78,6 +90,22 @@ class UserRepository
 
         return $stmt->execute();
     }
+
+    public function updatePWD(int $id, User $user): bool
+    {
+        $stmt = $this->pdo->prepare('
+            UPDATE users SET name = ?, email = ?, password = ? WHERE id = ?;
+        ');
+        $stmt->bindValue(1, $user->name);
+        $stmt->bindValue(2, $user->email);
+        $stmt->bindValue(3, $user->getPassword());
+        $stmt->bindValue(4, $id);
+
+        return $stmt->execute();
+    }
+    /*
+     * TODO: REFATORAR O MÉTODO updatePWD()!!! -------------------------------------------------------------------------------
+     */
 
     public function delete(int $id): bool
     {

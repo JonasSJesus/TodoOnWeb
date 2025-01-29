@@ -1,6 +1,5 @@
 <?php
 
-use Todo\Controller\AdminController;
 use Todo\Controller\AuthController;
 use Todo\Controller\TaskController;
 use Todo\Controller\UserController;
@@ -8,6 +7,8 @@ use Todo\Repository\TaskRepository;
 use Todo\Repository\UserRepository;
 
 session_start();
+
+require_once 'errors.php';
 
 require_once __DIR__ . '/../vendor/autoload.php';
 $dbPath = __DIR__ . '/../db.sqlite';
@@ -36,7 +37,7 @@ switch ($path) {
         $taskController->userTaskPage();
         break;
     case '/user':
-        $userController->updatePage();
+        $userController->UpdatePage();
         break;
     case '/minha-conta':
         echo 'nice';

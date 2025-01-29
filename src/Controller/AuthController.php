@@ -12,7 +12,6 @@ class AuthController
     public function __construct(UserRepository $repository)
     {
         $this->repository = $repository;
-        #session_start();
     }
 
     public function userCadForm(): void
@@ -41,7 +40,9 @@ class AuthController
         if ($this->repository->add($user)){
             $this->createSession($user);
         }else{
-            header('Location: /?sucesso=0');
+            $_SESSION['login'] = 'Campos vazios não são permitidos!';
+            header("Location: /");
+            exit;
         }
     }
 
@@ -50,10 +51,17 @@ class AuthController
         $email = $_REQUEST['email'];
         $password = $_REQUEST['password'];
 
+        if (!$email or !$password){
+            $_SESSION['login'] = 'Campos vazios não são permitidos!';
+            header("Location: /login");
+            exit;
+        }
+
         $user = $this->repository->findByEmail($email);
 
-        if (!$user or !password_verify($password, $user->password)){
-            echo "<script>alert('Usuario ou senha incoretos!')</script>";
+        if (!$user or !password_verify($password, $user->getPassword())){
+            $_SESSION['login'] = 'Usuario ou senha incorretos!';
+            header("Location: /login");
             exit;
         }
 
@@ -67,7 +75,7 @@ class AuthController
         $_SESSION['email'] = $user->email;
         $_SESSION['nome'] = $user->name;
         $_SESSION['id'] = $user->id;
-        $_SESSION['is_admin'] = $user->is_admin == 1 ? true : false;
+        $_SESSION['is_admin'] = $user->is_admin;
         session_regenerate_id(true);
     }
 
