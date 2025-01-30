@@ -1,6 +1,7 @@
 <?php
 
 use Todo\Repository\UserRepository;
+use Todo\Entity\User;
 
 $pdo = new PDO('sqlite:db.sqlite');
 /*$pdo->exec("
@@ -33,5 +34,9 @@ $pdo = new PDO('sqlite:db.sqlite');
 
 require_once 'vendor/autoload.php';
 
+$user = new User('jonas', 'email', 1);
+$user->setPassword('123123');
+
+
 $userRepository = new UserRepository($pdo);
-var_dump($userRepository->findById(3));
+echo($userRepository->findLastId());

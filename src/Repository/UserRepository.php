@@ -16,8 +16,9 @@ class UserRepository
 
     private function hydrateUser(array $data): User
     { 
-        $user = new User($data['name'], $data['email'], $data['password'], $data['is_admin']);
+        $user = new User($data['name'], $data['email'],  $data['is_admin']);
         $user->setId($data['id']);
+        $user->setPassword($data['password']);
 
         return $user;
     }
@@ -64,15 +65,25 @@ class UserRepository
         }
     }
 
-    public function add(User $user): bool
+    public function findLastId(): int
+    {
+        return $this->pdo->lastInsertId();
+    }
+
+    public function add(User $user): User
     {
         $stmt = $this->pdo->prepare('
             INSERT INTO users (name, email, password) VALUES (?, ?, ?)');
         $stmt->bindValue(1, $user->name);
         $stmt->bindValue(2, $user->email);
-        $stmt->bindValue(3, $user->getPassword());
+        $stmt->bindValue(3, $user->password);
 
-        return $stmt->execute();
+        $stmt->execute();
+
+        $id = $this->pdo->lastInsertId();
+        $user->setId($id);
+
+        return $user;
     }
 
 
@@ -82,11 +93,12 @@ class UserRepository
     public function update(int $id, User $user): bool
     {
         $stmt = $this->pdo->prepare('
-            UPDATE users SET name = ?, email = ? WHERE id = ?;
+            UPDATE users SET name = ?, email = ?, is_admin = ? WHERE id = ?;
         ');
         $stmt->bindValue(1, $user->name);
         $stmt->bindVAlue(2, $user->email);
-        $stmt->bindValue(3, $id);
+        $stmt->bindVAlue(3, $user->is_admin);
+        $stmt->bindValue(4, $id);
 
         return $stmt->execute();
     }
@@ -94,12 +106,13 @@ class UserRepository
     public function updatePWD(int $id, User $user): bool
     {
         $stmt = $this->pdo->prepare('
-            UPDATE users SET name = ?, email = ?, password = ? WHERE id = ?;
+            UPDATE users SET name = ?, email = ?, is_admin = ?, password = ? WHERE id = ?;
         ');
         $stmt->bindValue(1, $user->name);
         $stmt->bindValue(2, $user->email);
-        $stmt->bindValue(3, $user->getPassword());
-        $stmt->bindValue(4, $id);
+        $stmt->bindValue(3, $user->is_admin);
+        $stmt->bindValue(4, $user->password);
+        $stmt->bindValue(5, $id);
 
         return $stmt->execute();
     }

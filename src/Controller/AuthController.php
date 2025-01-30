@@ -12,6 +12,9 @@ class AuthController
     public function __construct(UserRepository $repository)
     {
         $this->repository = $repository;
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
     }
 
     public function userCadForm(): void
@@ -32,16 +35,28 @@ class AuthController
         $encrypted = password_hash($password, PASSWORD_BCRYPT);
         $confirm_password = $_POST['confirm_password'];
 
-        if ($password !== $confirm_password){
-            echo "<script>alert('as senhas não coincidem!')</script>";
+        if (!$email or !$password or !$name){
+            $_SESSION['register'] = 'Campos vazios não são permitidos!';
+            header("Location: /cadastro");
             exit;
         }
-        $user = new User($name, $email, $encrypted);
+
+        if ($password !== $confirm_password){
+            $_SESSION['register'] = 'As senhas não coincidem!';
+            header("Location: /cadastro");
+            exit;
+        }
+
+        $user = new User($name, $email);
+        $user->setPassword($encrypted);
+
         if ($this->repository->add($user)){
-            $this->createSession($user);
+            $this->createSession();
+            header('Location: /cadastro');
+            exit;
         }else{
-            $_SESSION['login'] = 'Campos vazios não são permitidos!';
-            header("Location: /");
+            $_SESSION['register'] = 'Erro ao cadastrar Usuário';
+            header("Location: /cadastro");
             exit;
         }
     }
@@ -59,7 +74,7 @@ class AuthController
 
         $user = $this->repository->findByEmail($email);
 
-        if (!$user or !password_verify($password, $user->getPassword())){
+        if (!$user or !password_verify($password, $user->password)){
             $_SESSION['login'] = 'Usuario ou senha incorretos!';
             header("Location: /login");
             exit;
@@ -72,9 +87,9 @@ class AuthController
     private function createSession($user)
     {
         $_SESSION['logado'] = true;
+        $_SESSION['id'] = $user->id;
         $_SESSION['email'] = $user->email;
         $_SESSION['nome'] = $user->name;
-        $_SESSION['id'] = $user->id;
         $_SESSION['is_admin'] = $user->is_admin;
         session_regenerate_id(true);
     }
@@ -88,15 +103,13 @@ class AuthController
 
     public function requireAuth($path)
     {
-        
         if(!$this->isLogged() and $path !== '/login' and $path !== '/cadastro'){
             header('Location: /login');
             exit;
-        }
-        
+        }   
     }
 
-    public function isLogged(): bool
+    private function isLogged(): bool
     {
         return array_key_exists('logado', $_SESSION);
     }

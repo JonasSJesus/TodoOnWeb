@@ -6,7 +6,7 @@ use Todo\Controller\UserController;
 use Todo\Repository\TaskRepository;
 use Todo\Repository\UserRepository;
 
-session_start();
+#session_start();
 
 require_once 'errors.php';
 

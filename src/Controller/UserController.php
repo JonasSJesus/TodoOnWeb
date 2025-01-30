@@ -48,7 +48,8 @@ class UserController
             exit;
         }
 
-        $user = new User($name, $email);
+        $user = new User($name, $email, $role);
+
         
         if (!empty($password)) {
             $encrypted = password_hash($password, PASSWORD_BCRYPT);    

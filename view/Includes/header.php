@@ -16,7 +16,7 @@
         <ul>
             <li><a href="/">Home</a></li>
             <li><a href="/tasks">Minhas Tarefas</a></li>
-            <?php if (array_key_exists('id', $_SESSION)) {
+            <?php if ($_SESSION['logado']) {
                 echo "<li><a href=" . "\"/user?id=" . $_SESSION['id'] . "\" >Minha Conta</a></li>";
             }
             ?>
