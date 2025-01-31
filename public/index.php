@@ -24,7 +24,10 @@ $taskController = new TaskController($taskRepository, $userRepository);
 $userController = new UserController($userRepository);
 $authController = new AuthController($userRepository);
 
-$authController->requireAuth($path);
+#var_dump ($_SESSION);
+#exit;
+
+$authController->checkAccess($path);
 
 switch ($path) {
     case '/': 

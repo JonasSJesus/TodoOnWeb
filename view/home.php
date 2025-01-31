@@ -1,6 +1,15 @@
     <?php include_once 'Includes/header.php'; ?>
 
-
+    <?php if (isset($_SESSION['register'])): ?>
+        <script>
+            Swal.fire({
+                title: "<?= $_SESSION['register']; ?>",
+                icon: "success",
+                draggable: true
+            });
+        </script>
+        <?php unset($_SESSION['register']); ?>
+    <?php endif; ?>
 
     <div class="container">
         <h2>Lista de Tarefas</h2>

@@ -31,6 +31,7 @@ class TaskController
 
     public function adminPage(): void
     {
+        
         $users = $this->userRepository->all();
         require_once __DIR__ . "/../../view/admin.php";
     }

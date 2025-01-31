@@ -17,6 +17,7 @@ class AuthController
         }
     }
 
+    // Renderizar formulários de cadastro e Login
     public function userCadForm(): void
     {
         require_once __DIR__ . '/../../view/register.php';
@@ -27,6 +28,7 @@ class AuthController
         require_once __DIR__ . '/../../view/login.php';
     }
 
+    // Adiciona Usuários 
     public function addUser(): void
     {
         $name = $_POST['name'];
@@ -50,9 +52,12 @@ class AuthController
         $user = new User($name, $email);
         $user->setPassword($encrypted);
 
-        if ($this->repository->add($user)){
-            $this->createSession();
-            header('Location: /cadastro');
+        $savedUser = $this->repository->add($user);
+
+        if ($savedUser){
+            $this->createSession($savedUser);
+            $_SESSION['register'] = 'Usuário Criado com Sucesso!';
+            header('Location: /');
             exit;
         }else{
             $_SESSION['register'] = 'Erro ao cadastrar Usuário';
@@ -61,6 +66,7 @@ class AuthController
         }
     }
 
+    // Validação de credenciais
     public function login()
     {
         $email = $_REQUEST['email'];
@@ -84,6 +90,7 @@ class AuthController
         header ('Location: /');
     }
 
+    //  Criação de sessão
     private function createSession($user)
     {
         $_SESSION['logado'] = true;
@@ -94,6 +101,7 @@ class AuthController
         session_regenerate_id(true);
     }
 
+    // Destrói a Sessão atual
     public function logout()
     {
         session_destroy();
@@ -101,17 +109,33 @@ class AuthController
         exit;
     }
 
-    public function requireAuth($path)
+    // Pede autenticação
+    public function checkAccess($path): void
     {
-        if(!$this->isLogged() and $path !== '/login' and $path !== '/cadastro'){
+        $public_routes = ['/login', '/cadastro'];
+        $admin_router = ['/admin'];
+
+
+        if(!in_array($path, $public_routes) && !$this->isLogged()){
             header('Location: /login');
             exit;
-        }   
+        }
+
+        if(in_array($path, $admin_router) && !$this->isAdmin()){
+            echo "Somente admin pode entrar aqui!";
+            exit;
+        }
     }
 
+    // Verifica se está em uma sessão
     private function isLogged(): bool
     {
-        return array_key_exists('logado', $_SESSION);
+        return isset($_SESSION['logado']);
+    }
+
+    public function isAdmin(): bool
+    {
+        return isset($_SESSION['is_admin']) and $_SESSION['is_admin'] == 1;
     }
 }
 
