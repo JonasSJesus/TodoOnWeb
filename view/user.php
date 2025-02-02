@@ -2,18 +2,22 @@
     <div class="container">
         <h2>Minha Conta</h2>
         <h3>Adicionar Nova Tarefa</h3>
-        <form action="home.php" method="get">
-            <input type="text" name="description" placeholder="Descrição da Tarefa" required>
-            <input type="date" name="creation_date" required>
-            <input type="date" name="completion_date" required>
+        <form method="post">
+            <label for="description">Descrição da Tarefa:</label>
+            <input type="text" name="description" required>
+            
+            <label for="completion_date">Data de conclusão limite (Deixe vazio para não adicionar data limite):</label>
+            <input type="date" name="completion_date">
+
+            <label for="priority">Selecione a prioridade:</label>
             <select name="priority" required>
-                <option value="">Selecione a Prioridade</option>
                 <option value="1">1 - Baixa</option>
                 <option value="2">2 - Média</option>
                 <option value="3">3 - Alta</option>
             </select>
+
+            <label for="category">Selecione a categoria:</label>
             <select name="category" required>
-                <option value="">Selecione a Categoria</option>
                 <option value="trabalho">Trabalho</option>
                 <option value="pessoal">Pessoal</option>
                 <option value="estudo">Estudo</option>
