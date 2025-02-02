@@ -43,8 +43,8 @@
                     <td><?= $user->name; ?></td>
                     <td><?= $user->email; ?></td>
                     <td>
-                        <a href="/editar-user?id=<?= $user->id ?>">Editar</a> |
-                        <a href="/excluir-user?id=<?= $user->id ?>">Excluir</a>
+                        <a href="/edit-user?id=<?= $user->id ?>">Editar</a> |
+                        <a href="/delete-user?id=<?= $user->id ?>">Excluir</a>
                     </td>
                 </tr>
             </tbody>

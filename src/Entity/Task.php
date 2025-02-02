@@ -5,6 +5,7 @@ namespace Todo\Entity;
 class Task
 {
     public readonly int $id;
+    public readonly int $user_id;
     public readonly string $title;
     public readonly string $description;
     //public readonly string $status;

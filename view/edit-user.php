@@ -28,7 +28,7 @@
     <main class="container">
 
         <h2>Editar Usuário</h2>
-        <form method="post" action="/editar-user">
+        <form method="post">
             <div>
                 <label for="user-id">ID do Usuário:</label>
                 <input type="text" id="user-id" name="id" value="<?= $user->id; ?>" readonly>

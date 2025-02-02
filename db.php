@@ -39,4 +39,4 @@ $user->setPassword('123123');
 
 
 $userRepository = new UserRepository($pdo);
-echo($userRepository->findLastId());
+var_dump ($userRepository->all());

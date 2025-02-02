@@ -15,7 +15,7 @@ class TaskRepository
     public function add(Task $task): bool
     {
         $stmt = $this->pdo->prepare(
-            'INSERT INTO tasks (titulo, user_id, name, description, due_date, priority, category, completed, status) VALUES (?, ?, ?);'
+            'INSERT INTO tasks (user_id, name, description, due_date, priority, category, completed) VALUES (?, ?, ?);'
         );
         $stmt->bindValue(1, $task->title);
         $stmt->bindValue(2, $task->description);

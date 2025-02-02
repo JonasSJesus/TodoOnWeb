@@ -1,3 +1,3 @@
 <?php
 
-var_dump(PHP_SESSION_NONE);
+var_dump($_REQUEST);

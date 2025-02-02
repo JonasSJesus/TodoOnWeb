@@ -39,12 +39,6 @@ switch ($path) {
     case '/tasks':
         $taskController->userTaskPage();
         break;
-    case '/user':
-        $userController->UpdatePage();
-        break;
-    case '/minha-conta':
-        echo 'nice';
-        break;
     case '/cadastro':
         if ($method == 'GET'){
             $authController->userCadForm();
@@ -62,10 +56,10 @@ switch ($path) {
     case '/logout':
         $authController->logout();
         break;
-    case '/excluir-user':
+    case '/delete-user':
         $userController->DeleteUser();
         break;
-    case '/editar-user':
+    case '/edit-user':
         if ($method == 'GET'){
             $userController->UpdatePage();
         } elseif ($method == 'POST'){
