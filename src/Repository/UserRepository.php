@@ -23,9 +23,11 @@ class UserRepository
         return $user;
     }
 
-    public function all()
+    public function all(): array 
     {
-        $stmt = $this->pdo->query('SELECT * FROM users');
+        $stmt = $this->pdo->query(
+            'SELECT * FROM users'
+        );
         $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return array_map($this->hydrateUser(...), $users);
@@ -33,8 +35,8 @@ class UserRepository
 
     public function findByEmail($email): User|null
     {
-        $stmt = $this->pdo->prepare('
-            SELECT * FROM users WHERE email = ?;
+        $stmt = $this->pdo->prepare(
+            'SELECT * FROM users WHERE email = ?;
         ');
         $stmt->bindValue(1, $email);
         $stmt->execute();

@@ -21,6 +21,6 @@
             <?php if (array_key_exists('is_admin', $_SESSION) and  $_SESSION['is_admin'] == 1){
                 echo "<li><a href=\"/admin\">Admin</a></li>";
             } ?>
-            <li><a>Usuário:<?= $_SESSION['nome']?></a></li>
+            <li><a><strong>Usuário: </strong><?= $_SESSION['nome']?></a></li>
         </ul>
     </nav>

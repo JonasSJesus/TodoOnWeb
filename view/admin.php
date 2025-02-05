@@ -65,34 +65,23 @@
                     <th>Ações</th>
                 </tr>
             </thead>
+            <?php foreach ($tasks as $task): ?>
             <tbody>
                 <tr>
-                    <td>1</td>
-                    <td>Completar relatório mensal</td>
-                    <td>João Silva</td>
-                    <td>01/05/2023</td>
-                    <td>10/05/2023</td>
-                    <td>2</td>
-                    <td>Trabalho</td>
+                    <td><?= $task->id; ?></td>
+                    <td><?= $task->description; ?></td>
+                    <td><?= $task->user_id; ?></td>
+                    <td><?= $task->created_at; ?></td>
+                    <td><?= $task->due_date; ?></td>
+                    <td><?= $task->priority; ?></td>
+                    <td><?= $task->category; ?></td>
                     <td>
                         <a href="#">Editar</a> |
                         <a href="#">Excluir</a>
                     </td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Fazer compras no supermercado</td>
-                    <td>Maria Santos</td>
-                    <td>03/05/2023</td>
-                    <td>05/05/2023</td>
-                    <td>1</td>
-                    <td>Pessoal</td>
-                    <td>
-                        <a href="edit-task.html">Editar</a> |
-                        <a href="#">Excluir</a>
-                    </td>
-                </tr>
             </tbody>
+            <?php endforeach; ?>
         </table>
     </div>
 </body>

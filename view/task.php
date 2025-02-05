@@ -18,27 +18,31 @@
 
             <label for="category">Selecione a categoria:</label>
             <select name="category" required>
-                <option value="trabalho">Trabalho</option>
-                <option value="pessoal">Pessoal</option>
-                <option value="estudo">Estudo</option>
-                <option value="lazer">Lazer</option>
-                <option value="saude">Saúde</option>
+                <option value="Trabalho">Trabalho</option>
+                <option value="Pessoal">Pessoal</option>
+                <option value="Estudo">Estudo</option>
+                <option value="Lazer">Lazer</option>
+                <option value="Casa">Casa</option>
+                <option value="Saude">Saúde</option>
             </select>
             <input type="submit" value="Adicionar Tarefa">
         </form>
 
         <h3>Minhas Tarefas</h3>
+
+        <?php foreach ($tasks as $task): ?>
         <div class="task">
-            <h3>Tarefa 1</h3>
-            <p><strong>Descrição:</strong> Completar relatório mensal</p>
-            <p><strong>Data de Criação:</strong> 01/05/2023</p>
-            <p><strong>Data de Conclusão:</strong> 10/05/2023</p>
-            <p><strong>Prioridade:</strong> 2</p>
-            <p><strong>Categoria:</strong> Trabalho</p>
+            <h3><?= $task->name; ?></h3>
+            <p><strong>Descrição: </strong><?= $task->description; ?></p>
+            <p><strong>Data de Criação: </strong><?= $task->created_at; ?></p>
+            <p><strong>Data de Conclusão: </strong><?= $task->due_date; ?></p>
+            <p><strong>Prioridade: </strong><?= $task->priority; ?></p>
+            <p><strong>Categoria: </strong><?= $task->category; ?></p>
         </div>
+        <?php endforeach; ?>
         <div class="task">
-            <h3>Tarefa 2</h3>
-            <p><strong>Descrição:</strong> Fazer compras no supermercado</p>
+            <h3>Tarefa Teste</h3>
+            <p><strong>Descrição: </strong>Comprar: Arroz, Feijão, Massa, Miojo, Carne Moída</p>
             <p><strong>Data de Criação:</strong> 03/05/2023</p>
             <p><strong>Data de Conclusão:</strong> 05/05/2023</p>
             <p><strong>Prioridade:</strong> 1</p>

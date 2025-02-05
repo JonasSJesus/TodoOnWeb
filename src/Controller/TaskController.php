@@ -13,19 +13,14 @@ class TaskController
     {
         
     }
-    public function requestHome(): void
+    public function homePage(): void
     {
         require_once __DIR__ . '/../../view/home.php';
     }
 
-    public function addTaskRequest()
-    {
-        echo "adicionando task";
-    }
-
     public function userTaskPage()
     {
-        #$this->taskRepository->all();
+        $tasks = $this->taskRepository->all();
         require_once __DIR__ . '/../../view/task.php';
     }
 
@@ -33,6 +28,12 @@ class TaskController
     {
         
         $users = $this->userRepository->all();
+        $tasks = $this->taskRepository->all();
         require_once __DIR__ . "/../../view/admin.php";
+    }
+
+    public function addTask(): void
+    {
+        
     }
 }

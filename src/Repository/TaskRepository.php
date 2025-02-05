@@ -15,18 +15,26 @@ class TaskRepository
     public function add(Task $task): bool
     {
         $stmt = $this->pdo->prepare(
-            'INSERT INTO tasks (user_id, name, description, due_date, priority, category, completed) VALUES (?, ?, ?);'
+            'INSERT INTO tasks (user_id, name, description, due_date, priority, category) VALUES (?, ?, ?, ?, ?, ?);'
         );
-        $stmt->bindValue(1, $task->title);
-        $stmt->bindValue(2, $task->description);
-        $stmt->bindValue(3, $task->status);
+        $stmt->bindValue(1, $task->user_id);
+        $stmt->bindValue(2, $task->name);
+        $stmt->bindValue(3, $task->description);
+        $stmt->bindValue(4, $task->due_date);
+        $stmt->bindValue(5, $task->priority);
+        $stmt->bindValue(6, $task->category);
 
         return $stmt->execute();
     }
 
     public function hydrate(array $data): Task
     {
+        $task = new Task($data['user_id'], $data['name'], $data['description'], $data['due_date'], $data['priority'], $data['category']);
+        
+        $task->setId($data['id']);
+        $task->setCreated_at($data['created_at']);
 
+        return $task;
     }
 
     public function all(): array
@@ -35,9 +43,9 @@ class TaskRepository
             'SELECT * FROM tasks;'
         );
 
-        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $tasks = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        return $this->hydrate($data);
+        return array_map($this->hydrate(...),$tasks);
     }
 
 

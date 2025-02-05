@@ -6,7 +6,6 @@ use Todo\Controller\UserController;
 use Todo\Repository\TaskRepository;
 use Todo\Repository\UserRepository;
 
-#session_start();
 
 require_once 'errors.php';
 
@@ -24,14 +23,13 @@ $taskController = new TaskController($taskRepository, $userRepository);
 $userController = new UserController($userRepository);
 $authController = new AuthController($userRepository);
 
-#var_dump ($_SESSION);
-#exit;
+
 
 $authController->checkAccess($path);
 
 switch ($path) {
     case '/': 
-        $taskController->requestHome();
+        $taskController->homePage();
         break;
     case '/admin':
         $taskController->adminPage();
@@ -68,7 +66,5 @@ switch ($path) {
         break;
     default:
         require_once "logout.php";
-        #echo "página não encontrada!";
-        #header('Location: /');
         break;
 }
