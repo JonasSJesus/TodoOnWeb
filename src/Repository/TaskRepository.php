@@ -27,16 +27,6 @@ class TaskRepository
         return $stmt->execute();
     }
 
-    public function hydrate(array $data): Task
-    {
-        $task = new Task($data['user_id'], $data['name'], $data['description'], $data['due_date'], $data['priority'], $data['category']);
-        
-        $task->setId($data['id']);
-        $task->setCreated_at($data['created_at']);
-
-        return $task;
-    }
-
     public function all(): array
     {
         $stmt = $this->pdo->query(
@@ -48,6 +38,18 @@ class TaskRepository
         return array_map($this->hydrate(...),$tasks);
     }
 
+    public function readById(int $id)
+    {
+        $stmt = $this->pdo->prepare(
+            'SELECT * FROM tasks WHERE id = :id'
+        );
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
+
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $this->hydrate($data);
+    }
+
     public function delete(int $id): bool
     {
         $stmt = $this->pdo->prepare(
@@ -55,5 +57,19 @@ class TaskRepository
         );
         $stmt->bindValue(':id', $id);
         return $stmt->execute();
+    }
+
+    public function update(Task $task)
+    {
+
+    }
+
+    private function hydrate(array $data): Task
+    {
+        $task = new Task($data['user_id'], $data['name'], $data['description'], $data['due_date'], $data['priority'], $data['category']);
+        $task->setId($data['id']);
+        $task->setCreated_at($data['created_at']);
+
+        return $task;
     }
 }

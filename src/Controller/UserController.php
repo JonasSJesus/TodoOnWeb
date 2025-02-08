@@ -45,7 +45,7 @@ class UserController
         $id = $_GET['id'];
 
         $user = $this->userRepository->findById($id);
-        require_once __DIR__ . "/../../view/edit-user.php";
+        require_once __DIR__ . "/../../view/profile.php";
     }
 
     public function updateUser(): void
@@ -53,9 +53,8 @@ class UserController
         $id = $_REQUEST['id'];
         $name = $_REQUEST['name'];
         $email = $_REQUEST['email'];
-        $role = $_REQUEST['role'];
-        $password = $_REQUEST['password'];
-        $confirm_password = $_REQUEST['confirm_password'];
+        $password = $_REQUEST['password'] ?? '';
+        $confirm_password = $_REQUEST['confirm_password'] ?? '';
 
         if ($password !== $confirm_password) {
             $_SESSION['sweet_alert'] = 'As senhas não coincidem!';
@@ -85,12 +84,13 @@ class UserController
         
         if($this->userRepository->update($id, $user)){
             $_SESSION['update'] = 'Usuário atualizado com sucesso!';
-            header('Location: /admin?sucesso=1');
+            header('Location: /profile?id=' . $id);
             exit;
         } else {
             $_SESSION['updateError'] = 'Erro ao atualizar o usuário!';
-            header("Location: /user?id=" . $id);
+            header("Location: /profile?id=" . $id);
             exit;
         }
     }
+
 }

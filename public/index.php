@@ -1,10 +1,9 @@
 <?php
 
 use Todo\Controller\AuthController;
-use Todo\Controller\TaskController;
-use Todo\Controller\UserController;
 use Todo\Repository\TaskRepository;
 use Todo\Repository\UserRepository;
+use PDO;
 
 
 require_once 'errors.php';
@@ -21,8 +20,6 @@ $routesKey = "$method|$path";
 $userRepository = new UserRepository($pdo);
 $taskRepository = new TaskRepository($pdo);
 
-#$taskController = new TaskController($taskRepository, $userRepository);
-#$userController = new UserController($userRepository);
 $authController = new AuthController($taskRepository, $userRepository);
 
 

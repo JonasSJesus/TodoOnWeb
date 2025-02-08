@@ -1,56 +1,54 @@
-    <?php include_once 'Includes/header.php'; ?>
-    <div class="container">
-        <h2>Minha Conta</h2>
-        <h3>Adicionar Nova Tarefa</h3>
-        <form method="post" class="form-container">
-            <label for="name">Nome da Tarefa:</label>
-            <input type="text" name="name" required>
+    <?php require_once 'Includes/header.php'; ?>
 
-            <label for="description">Descrição da Tarefa:</label>
-            <input type="text" name="description" required>
+    <main class="container">
+        <form class="task-form" method="post">
+            <h2>Add New Task</h2>
+            <input type="hidden" id="user_id" value="123">
+            
+            <div class="form-group">
+                <label for="name">Task Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
 
-            <label for="completion_date">Data de conclusão limite (Deixe vazio para não adicionar data limite):</label>
-            <input type="date" name="completion_date">
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" rows="4" name="description"></textarea>
+            </div>
 
-            <label for="priority">Selecione a prioridade:</label>
-            <select name="priority" required>
-                <option value="1">1 - Baixa</option>
-                <option value="2">2 - Média</option>
-                <option value="3">3 - Alta</option>
-            </select>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="due_date">Due Date (Se for necessário)</label>
+                    <input type="date" id="due_date" name="due_date">
+                </div>
 
-            <label for="category">Selecione a categoria:</label>
-            <select name="category" required>
-                <option value="Trabalho">Trabalho</option>
-                <option value="Pessoal">Pessoal</option>
-                <option value="Estudo">Estudo</option>
-                <option value="Lazer">Lazer</option>
-                <option value="Casa">Casa</option>
-                <option value="Saude">Saúde</option>
-            </select>
-            <input type="submit" value="Adicionar Tarefa">
+                <div class="form-group">
+                    <label for="priority">Priority</label>
+                    <select id="priority" name="priority" required>
+                        <option value="1">Low</option>
+                        <option value="2">Medium</option>
+                        <option value="3">High</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select id="category" name="category" required>
+                    <option value="Trabalho">Trabalho</option>
+                    <option value="Pessoal">Pessoal</option>
+                    <option value="Estudo">Estudo</option>
+                    <option value="Lazer">Lazer</option>
+                    <option value="Casa">Casa</option>
+                    <option value="Saude">Saude</option>
+                    <option value="Outros">Outros</option>
+                </select>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">Create Task</button>
+                <a href="/" class="btn-secondary">Cancel</a>
+            </div>
         </form>
-
-        <h3>Minhas Tarefas</h3>
-
-        <?php foreach ($tasks as $task): ?>
-        <div class="task">
-            <h3><?= $task->name; ?></h3>
-            <p><strong>Descrição: </strong><?= $task->description; ?></p>
-            <p><strong>Data de Criação: </strong><?= $task->created_at; ?></p>
-            <p><strong>Data de Conclusão: </strong><?= $task->due_date; ?></p>
-            <p><strong>Prioridade: </strong><?= $task->priority; ?></p>
-            <p><strong>Categoria: </strong><?= $task->category; ?></p>
-        </div>
-        <?php endforeach; ?>
-        <div class="task">
-            <h3>--------------------------------------------------------------------------------Tarefa Modelo--------------------------------------------------------------------------------------</h3>
-            <p><strong>Descrição: </strong>Essa tarefa estará sempre aqui, pois esta escrita no HTML da página!</p>
-            <p><strong>Data de Criação:</strong> 03/05/2023</p>
-            <p><strong>Data de Conclusão:</strong> 05/05/2023</p>
-            <p><strong>Prioridade:</strong> 1</p>
-            <p><strong>Categoria:</strong> Pessoal</p>
-        </div>
-    </div>
+    </main>
 </body>
 </html>

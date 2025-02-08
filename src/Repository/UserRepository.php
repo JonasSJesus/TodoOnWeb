@@ -14,15 +14,6 @@ class UserRepository
         $this->pdo = $pdo;
     }
 
-    private function hydrateUser(array $data): User
-    { 
-        $user = new User($data['name'], $data['email'],  $data['is_admin']);
-        $user->setId($data['id']);
-        $user->setPassword($data['password']);
-
-        return $user;
-    }
-
     public function all(): array 
     {
         $stmt = $this->pdo->query(
@@ -95,12 +86,11 @@ class UserRepository
     public function update(int $id, User $user): bool
     {
         $stmt = $this->pdo->prepare('
-            UPDATE users SET name = ?, email = ?, is_admin = ? WHERE id = ?;
+            UPDATE users SET name = ?, email = ? WHERE id = ?;
         ');
         $stmt->bindValue(1, $user->name);
         $stmt->bindVAlue(2, $user->email);
-        $stmt->bindVAlue(3, $user->is_admin);
-        $stmt->bindValue(4, $id);
+        $stmt->bindValue(3, $id);
 
         return $stmt->execute();
     }
@@ -130,5 +120,14 @@ class UserRepository
         $stmt->bindValue(1, $id);
 
         return $stmt->execute();
-    } 
+    }
+
+    private function hydrateUser(array $data): User
+    {
+        $user = new User($data['name'], $data['email'],  $data['is_admin']);
+        $user->setId($data['id']);
+        $user->setPassword($data['password']);
+
+        return $user;
+    }
 }

@@ -1,26 +1,21 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To Do App - Administração</title>
-    <link rel="stylesheet" href="./css/styles.css">
-    <!--API do SweetAlert -->
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <title>TaskMaster - Dashboard</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
     <header>
-        <h1>To Do App - Administração</h1>
+        <nav>
+            <div class="logo">TaskMaster</div>
+            <div class="nav-links">
+                <a href="/admin">Admin</a>
+                <a href="/" >Dashboard</a>
+                <a href="/profile?id=<?= $_SESSION['id']; ?>">Profile</a>
+                <a href="/tarefas" class="btn-primary">New Task</a>
+                <a href="/logout" class="btn-secondary">Logout</a>
+            </div>
+        </nav>
     </header>
-    <nav>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/tarefas">Minhas Tarefas</a></li>
-            <li><a href="/edit-user?id=<?= $_SESSION['id']?>" >Minha Conta</a></li>
-            <li><a href="/logout">Logout</a></li>
-            <?php if (array_key_exists('is_admin', $_SESSION) and  $_SESSION['is_admin'] == 1){
-                echo "<li><a href=\"/admin\">Admin</a></li>";
-            } ?>
-            <li><a><strong>Usuário: </strong><?= $_SESSION['nome']?></a></li>
-        </ul>
-    </nav>

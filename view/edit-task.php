@@ -1,49 +1,51 @@
-    <?php include_once 'Includes/header.php'; ?>
+    <?php require_once 'Includes/header.php'; ?>
+
     <main class="container">
-        <h2>Editar Tarefa</h2>
-        <form action="index.html" method="get">
-            <div>
-                <label for="task-id">ID da Tarefa:</label>
-                <input type="text" id="task-id" name="task-id" value="1" readonly>
+        <form class="task-form" method="post">
+            <h2>Edit Task</h2>
+            <input type="hidden" id="user_id" value="123">
+            
+            <div class="form-group">
+                <label for="name">Task Name</label>
+                <input type="text" id="name" value="Complete Project Proposal" required>
             </div>
-            <div>
-                <label for="description">Descrição:</label>
-                <input type="text" id="description" name="description" value="Completar relatório mensal" required>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" rows="4">Write and review the Q2 project proposal document</textarea>
             </div>
-            <div>
-                <label for="creation-date">Data de Criação:</label>
-                <input type="date" id="creation-date" name="creation_date" value="2023-05-01" required>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="due_date">Due Date</label>
+                    <input type="date" id="due_date" value="2024-03-20" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="priority">Priority</label>
+                    <select id="priority" required>
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high" selected>High</option>
+                    </select>
+                </div>
             </div>
-            <div>
-                <label for="completion-date">Data de Conclusão:</label>
-                <input type="date" id="completion-date" name="completion_date" value="2023-05-10" required>
-            </div>
-            <div>
-                <label for="priority">Prioridade:</label>
-                <select id="priority" name="priority" required>
-                    <option value="1">1 - Baixa</option>
-                    <option value="2" selected>2 - Média</option>
-                    <option value="3">3 - Alta</option>
+
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select id="category" required>
+                    <option value="work" selected>Work</option>
+                    <option value="personal">Personal</option>
+                    <option value="shopping">Shopping</option>
+                    <option value="other">Other</option>
                 </select>
             </div>
-            <div>
-                <label for="category">Categoria:</label>
-                <select id="category" name="category" required>
-                    <option value="trabalho" selected>Trabalho</option>
-                    <option value="pessoal">Pessoal</option>
-                    <option value="estudo">Estudo</option>
-                    <option value="lazer">Lazer</option>
-                    <option value="saude">Saúde</option>
-                </select>
-            </div>
-            <div>
-                <input type="submit" value="Salvar Alterações">
-                <a href="index.html" class="button">Cancelar</a>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">Update Task</button>
+                <a href="dashboard.php" class="btn-secondary">Cancel</a>
             </div>
         </form>
     </main>
-    <footer>
-        <p>&copy; 2023 To Do App. Todos os direitos reservados.</p>
-    </footer>
 </body>
 </html>
