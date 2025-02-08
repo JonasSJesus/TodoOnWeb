@@ -76,8 +76,8 @@
                     <td><?= $task->priority; ?></td>
                     <td><?= $task->category; ?></td>
                     <td>
-                        <a href="#">Editar</a> |
-                        <a href="#">Excluir</a>
+                        <a href="/edit-task?id=<?= $task->id; ?>">Editar</a> |
+                        <a href="/delete-task?id=<?= $task->id; ?>">Excluir</a>
                     </td>
                 </tr>
             </tbody>

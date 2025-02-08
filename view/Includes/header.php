@@ -15,7 +15,7 @@
     <nav>
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/tasks">Minhas Tarefas</a></li>
+            <li><a href="/tarefas">Minhas Tarefas</a></li>
             <li><a href="/edit-user?id=<?= $_SESSION['id']?>" >Minha Conta</a></li>
             <li><a href="/logout">Logout</a></li>
             <?php if (array_key_exists('is_admin', $_SESSION) and  $_SESSION['is_admin'] == 1){

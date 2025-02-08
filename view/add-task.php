@@ -2,10 +2,13 @@
     <div class="container">
         <h2>Minha Conta</h2>
         <h3>Adicionar Nova Tarefa</h3>
-        <form method="post">
+        <form method="post" class="form-container">
+            <label for="name">Nome da Tarefa:</label>
+            <input type="text" name="name" required>
+
             <label for="description">Descrição da Tarefa:</label>
             <input type="text" name="description" required>
-            
+
             <label for="completion_date">Data de conclusão limite (Deixe vazio para não adicionar data limite):</label>
             <input type="date" name="completion_date">
 
@@ -41,8 +44,8 @@
         </div>
         <?php endforeach; ?>
         <div class="task">
-            <h3>Tarefa Teste</h3>
-            <p><strong>Descrição: </strong>Comprar: Arroz, Feijão, Massa, Miojo, Carne Moída</p>
+            <h3>--------------------------------------------------------------------------------Tarefa Modelo--------------------------------------------------------------------------------------</h3>
+            <p><strong>Descrição: </strong>Essa tarefa estará sempre aqui, pois esta escrita no HTML da página!</p>
             <p><strong>Data de Criação:</strong> 03/05/2023</p>
             <p><strong>Data de Conclusão:</strong> 05/05/2023</p>
             <p><strong>Prioridade:</strong> 1</p>

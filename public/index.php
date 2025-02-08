@@ -8,63 +8,30 @@ use Todo\Repository\UserRepository;
 
 
 require_once 'errors.php';
-
 require_once __DIR__ . '/../vendor/autoload.php';
+
 $dbPath = __DIR__ . '/../db.sqlite';
 $pdo = new PDO("sqlite:$dbPath");
 
-$path = $_SERVER['PATH_INFO'] ?? '/';
+$routes = require_once __DIR__ . '/../config/routes.php';
 $method = $_SERVER['REQUEST_METHOD'];
+$path = $_SERVER['PATH_INFO'] ?? '/';
+$routesKey = "$method|$path";
 
 $userRepository = new UserRepository($pdo);
 $taskRepository = new TaskRepository($pdo);
 
-$taskController = new TaskController($taskRepository, $userRepository);
-$userController = new UserController($userRepository);
-$authController = new AuthController($userRepository);
-
+#$taskController = new TaskController($taskRepository, $userRepository);
+#$userController = new UserController($userRepository);
+$authController = new AuthController($taskRepository, $userRepository);
 
 
 $authController->checkAccess($path);
 
-switch ($path) {
-    case '/': 
-        $taskController->homePage();
-        break;
-    case '/admin':
-        $taskController->adminPage();
-        break;
-    case '/tasks':
-        $taskController->userTaskPage();
-        break;
-    case '/cadastro':
-        if ($method == 'GET'){
-            $authController->userCadForm();
-        } elseif ($method == 'POST'){
-            $authController->addUser();
-        }
-        break;
-    case '/login':
-        if ($method == 'GET'){
-            $authController->userLoginForm();
-        } elseif ($method == 'POST'){
-            $authController->login();
-        }
-        break;
-    case '/logout':
-        $authController->logout();
-        break;
-    case '/delete-user':
-        $userController->DeleteUser();
-        break;
-    case '/edit-user':
-        if ($method == 'GET'){
-            $userController->UpdatePage();
-        } elseif ($method == 'POST'){
-            $userController->UpdateUser();
-        }
-        break;
-    default:
-        require_once "logout.php";
-        break;
+
+if (array_key_exists($routesKey, $routes)){
+    [$class, $method] = $routes[$routesKey];
+
+    $controller = new $class($taskRepository, $userRepository);
+    $controller->$method();
 }

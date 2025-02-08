@@ -72,7 +72,7 @@ class UserRepository
         return $this->pdo->lastInsertId();
     }
 
-    public function add(User $user): User
+    public function add(User $user): User|null
     {
         $stmt = $this->pdo->prepare('
             INSERT INTO users (name, email, password) VALUES (?, ?, ?)');

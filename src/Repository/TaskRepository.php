@@ -15,14 +15,14 @@ class TaskRepository
     public function add(Task $task): bool
     {
         $stmt = $this->pdo->prepare(
-            'INSERT INTO tasks (user_id, name, description, due_date, priority, category) VALUES (?, ?, ?, ?, ?, ?);'
+            'INSERT INTO tasks (user_id, name, description, due_date, priority, category) VALUES (:user_id, :name, :description, :due_date, :priority, :category);'
         );
-        $stmt->bindValue(1, $task->user_id);
-        $stmt->bindValue(2, $task->name);
-        $stmt->bindValue(3, $task->description);
-        $stmt->bindValue(4, $task->due_date);
-        $stmt->bindValue(5, $task->priority);
-        $stmt->bindValue(6, $task->category);
+        $stmt->bindValue(':user_id', $task->user_id);
+        $stmt->bindValue(':name', $task->name);
+        $stmt->bindValue(':description', $task->description);
+        $stmt->bindValue(':due_date', $task->due_date);
+        $stmt->bindValue(':priority', $task->priority);
+        $stmt->bindValue(':category', $task->category);
 
         return $stmt->execute();
     }
@@ -48,5 +48,12 @@ class TaskRepository
         return array_map($this->hydrate(...),$tasks);
     }
 
-
+    public function delete(int $id): bool
+    {
+        $stmt = $this->pdo->prepare(
+            'DELETE FROM tasks WHERE id = :id'
+        );
+        $stmt->bindValue(':id', $id);
+        return $stmt->execute();
+    }
 }

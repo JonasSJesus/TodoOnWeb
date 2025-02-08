@@ -3,30 +3,23 @@
 namespace Todo\Controller;
 
 use Todo\Entity\User;
+use Todo\Repository\TaskRepository;
 use Todo\Repository\UserRepository;
 
 class AuthController 
 {
-    private UserRepository $repository;
+    private TaskRepository $taskRepository;
+    private UserRepository $userRepository;
 
-    public function __construct(UserRepository $repository)
+    public function __construct(TaskRepository $taskRepository, UserRepository $userRepository)
     {
-        $this->repository = $repository;
+        $this->taskRepository = $taskRepository;
+        $this->userRepository = $userRepository;
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
             session_regenerate_id();
         }
-    }
 
-    // Renderizar formulários de cadastro e Login
-    public function userCadForm(): void
-    {
-        require_once __DIR__ . '/../../view/register.php';
-    }
-
-    public function userLoginForm(): void
-    {
-        require_once __DIR__ . '/../../view/login.php';
     }
 
     // Adiciona Usuários 
@@ -53,9 +46,9 @@ class AuthController
         $user = new User($name, $email);
         $user->setPassword($encrypted);
 
-        $savedUser = $this->repository->add($user);
+        $savedUser = $this->userRepository->add($user);
 
-        if ($savedUser){
+        if (!empty($savedUser)){
             $this->createSession($savedUser);
             $_SESSION['register'] = 'Usuário Criado com Sucesso!';
             header('Location: /');
@@ -79,7 +72,7 @@ class AuthController
             exit;
         }
 
-        $user = $this->repository->findByEmail($email);
+        $user = $this->userRepository->findByEmail($email);
 
         if (!$user or !password_verify($password, $user->password)){
             $_SESSION['login'] = 'Usuario ou senha incorretos!';

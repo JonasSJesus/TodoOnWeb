@@ -3,37 +3,52 @@
 namespace Todo\Controller;
 
 use Todo\Entity\User;
+use Todo\Repository\TaskRepository;
 use Todo\Repository\UserRepository;
 
 class UserController
 {
-    private UserRepository $repository;
+    private TaskRepository $taskRepository;
+    private UserRepository $userRepository;
 
-    public function __construct(UserRepository $repository)
+    public function __construct(TaskRepository $taskRepository, UserRepository $userRepository)
     {
-        $this->repository = $repository;
+        $this->taskRepository = $taskRepository;
+        $this->userRepository = $userRepository;
+
+    }
+
+    // Renderizar formulários de cadastro e Login
+    public function userCadForm(): void
+    {
+        require_once __DIR__ . '/../../view/register.php';
+    }
+
+    public function userLoginForm(): void
+    {
+        require_once __DIR__ . '/../../view/login.php';
     }
     
     public function DeleteUser(): void
     {
         $id = $_GET['id'];
 
-        if($this->repository->delete($id)){
+        if($this->userRepository->delete($id)){
             header('Location: /admin?sucesso=1');
         } else {
             header('Location /admin?sucesso=0');
         }
     }
 
-    public function UpdatePage(): void
+    public function updatePage(): void
     {
         $id = $_GET['id'];
 
-        $user = $this->repository->findById($id);
+        $user = $this->userRepository->findById($id);
         require_once __DIR__ . "/../../view/edit-user.php";
     }
 
-    public function UpdateUser(): void
+    public function updateUser(): void
     {
         $id = $_REQUEST['id'];
         $name = $_REQUEST['name'];
@@ -56,7 +71,7 @@ class UserController
 
             $user->setPassword($encrypted);
 
-            if($this->repository->updatePWD($id, $user)){
+            if($this->userRepository->updatePWD($id, $user)){
                 $_SESSION['update'] = 'Usuário atualizado com sucesso!';
                 header('Location: /admin?sucesso=1');
                 exit;
@@ -68,7 +83,7 @@ class UserController
         }
 
         
-        if($this->repository->update($id, $user)){
+        if($this->userRepository->update($id, $user)){
             $_SESSION['update'] = 'Usuário atualizado com sucesso!';
             header('Location: /admin?sucesso=1');
             exit;
