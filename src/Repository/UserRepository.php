@@ -2,6 +2,7 @@
 
 namespace Todo\Repository;
 
+use PDOException;
 use Todo\Entity\User;
 use PDO;
 
@@ -65,14 +66,21 @@ class UserRepository
 
     public function add(User $user): User|null
     {
-        $stmt = $this->pdo->prepare('
-            INSERT INTO users (name, email, password) VALUES (?, ?, ?)');
-        $stmt->bindValue(1, $user->name);
-        $stmt->bindValue(2, $user->email);
-        $stmt->bindValue(3, $user->password);
+        try {
+            $stmt = $this->pdo->prepare('
+            INSERT INTO users (name, email, password) VALUES (:name, :email, :password)');
+            $stmt->bindValue(':name', $user->name);
+            $stmt->bindValue(':email', $user->email);
+            $stmt->bindValue(':password', $user->password);
 
-        $stmt->execute();
+            $stmt->execute();
 
+        } catch (PDOException $e) {
+            echo "error:" . $e->getMessage();
+            die();
+        }
+        
+        
         $id = $this->pdo->lastInsertId();
         $user->setId($id);
 
@@ -102,7 +110,7 @@ class UserRepository
         ');
         $stmt->bindValue(1, $user->name);
         $stmt->bindValue(2, $user->email);
-        $stmt->bindValue(3, $user->is_admin);
+        $stmt->bindValue(3, $user->role);
         $stmt->bindValue(4, $user->password);
         $stmt->bindValue(5, $id);
 

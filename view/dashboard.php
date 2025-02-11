@@ -30,7 +30,7 @@
                         <span class="due-date"><?= $task->due_date; ?></span>
                     </div>
                     <div class="task-actions">
-                        <a href="edit-task.php" class="btn-secondary">Edit</a>
+                        <a href="/edit-task?id=<?= $task->id; ?>" class="btn-secondary">Edit</a>
                         <button class="btn-danger"><a href="/delete-task?id=<?= $task->id; ?>">Deletar</a></button>
                     </div>
                 </div>

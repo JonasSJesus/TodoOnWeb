@@ -61,7 +61,9 @@ class TaskRepository
 
     public function update(Task $task)
     {
-
+        $stmt = $this->pdo->prepare('
+            UPDATE tasks SET name;
+        ');
     }
 
     private function hydrate(array $data): Task

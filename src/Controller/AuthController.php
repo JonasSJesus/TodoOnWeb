@@ -85,13 +85,13 @@ class AuthController
     }
 
     //  Criação de sessão
-    private function createSession($user)
+    private function createSession(User $user)
     {
         $_SESSION['logado'] = true;
         $_SESSION['id'] = $user->id;
         $_SESSION['email'] = $user->email;
         $_SESSION['nome'] = $user->name;
-        $_SESSION['is_admin'] = $user->is_admin;
+        $_SESSION['role'] = $user->role;
         session_regenerate_id(true);
     }
 

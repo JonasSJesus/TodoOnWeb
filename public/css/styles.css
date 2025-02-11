@@ -370,3 +370,7 @@ footer {
     background-color: white;
     margin-top: 4rem;
 }
+
+.todo {
+    color: red;
+}

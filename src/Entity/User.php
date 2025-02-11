@@ -8,13 +8,13 @@ class User
     public readonly string $name;
     public readonly string $email;
     public readonly string $password;
-    public readonly ?int $is_admin;
+    public readonly ?string $role;
 
-    public function __construct(string $name, string $email, ?int $is_admin = 0)
+    public function __construct(string $name, string $email, ?string $role = null)
     {
         $this->name = $name;
         $this->email = $email;
-        $this->is_admin = $is_admin;
+        $this->role = $role;
     }
 
     public function setId(int $id): void

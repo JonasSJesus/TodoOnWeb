@@ -7,12 +7,12 @@
             
             <div class="form-group">
                 <label for="name">Task Name</label>
-                <input type="text" id="name" value="Complete Project Proposal" required>
+                <input type="text" id="name" name="name" value="<?= $task->name; ?>" required>
             </div>
 
             <div class="form-group">
                 <label for="description">Description</label>
-                <textarea id="description" rows="4">Write and review the Q2 project proposal document</textarea>
+                <textarea id="description" name="description" rows="4"><?= $task->description; ?></textarea>
             </div>
 
             <div class="form-row">
@@ -43,7 +43,7 @@
 
             <div class="form-actions">
                 <button type="submit" class="btn-primary">Update Task</button>
-                <a href="dashboard.php" class="btn-secondary">Cancel</a>
+                <a href="/" class="btn-secondary">Cancel</a>
             </div>
         </form>
     </main>
