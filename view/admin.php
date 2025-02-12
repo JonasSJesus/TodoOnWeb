@@ -16,13 +16,13 @@
                 <?php foreach($users as $user): ?>
                 <tbody>
                     <tr>
-                        <td><?= $user->id; ?></td>
+                        <td><?= $user->getId(); ?></td>
                         <td><?= $user->name; ?></td>
                         <td><?= $user->email; ?></td>
                         <td>2024-03-10</td>
                         <td>
-                            <button class="btn-secondary btn-small"><a href="/profile?id=<?= $user->id ?>">Edit</a></button>
-                            <button class="btn-danger btn-small">Delete</button>
+                            <a class="btn-secondary btn-small" href="/profile?id=<?= $user->getId() ?>">Edit</a>
+                            <a href="/delete-user?id=<?= $user->getId(); ?>" class="btn-danger btn-small">Delete</a>
                         </td>
                     </tr>
                 </tbody>
@@ -41,21 +41,21 @@
                         <th>Priority</th>
                         <th>Data de Criação</th>
                         <th>Due Date</th>
-                        <th>Actions</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($tasks as $task): ?>
                     <tr>
-                        <td><?= $task->id; ?></td>
+                        <td><?= $task->getId(); ?></td>
                         <td><?= $task->user_id; ?></td>
                         <td><?= $task->name; ?></td>
                         <td><span class="priority-low"><?= $task->priority; ?></span></td>
                         <td><?= $task->created_at; ?></td>
                         <td><?= $task->due_date; ?></td>
                         <td>
-                            <button class="btn-secondary btn-small">Edit</button>
-                            <button class="btn-danger btn-small">Delete</button>
+                            <a class="btn-secondary btn-small" href="/edit-task?id=<?= $task->getId() ?>">Edit</a>
+                            <a href="/delete-task?id=<?= $task->getId(); ?>" class="btn-danger btn-small">Delete</a>
                         </td>
                     </tr>
                     <?php endforeach; ?>

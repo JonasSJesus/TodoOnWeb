@@ -1,7 +1,7 @@
     <?php require_once 'Includes/header.php'; ?>
     <main class="dashboard">
         <aside class="sidebar">
-            <h3>Categories</h3>
+            <h3>Categories <span class="todo">Implementar filtros!</span></h3>
             <ul>
                 <li><a href="#" class="active">All Tasks</a></li>
                 <li><a href="#">Work</a></li>
@@ -30,14 +30,14 @@
                         <span class="due-date"><?= $task->due_date; ?></span>
                     </div>
                     <div class="task-actions">
-                        <a href="/edit-task?id=<?= $task->id; ?>" class="btn-secondary">Edit</a>
-                        <a class="btn-danger" href="/delete-task?id=<?= $task->id; ?>">Deletar</a>
+                        <a href="/edit-task?id=<?= $task->getId(); ?>" class="btn-secondary">Edit</a>
+                        <a class="btn-danger" href="/delete-task?id=<?= $task->getId(); ?>">Deletar</a>
                     </div>
                 </div>
                 <?php endforeach; ?>
 
                 <div class="task-card priority-medium">
-                    <h3>Grocery Shopping</h3>
+                    <h3><span class="todo">Tarefa FIXA!</span></h3>
                     <p>Buy weekly groceries and household items</p>
                     <div class="task-meta">
                         <span class="category">Shopping</span>
@@ -50,7 +50,7 @@
                 </div>
 
                 <div class="task-card priority-high">
-                    <h3>Complete Project Proposal</h3>
+                    <h3><span class="todo">Tarefa FIXA!</span></h3>
                     <p>Write and review the Q2 project proposal document</p>
                     <div class="task-meta">
                         <span class="category">Work</span>

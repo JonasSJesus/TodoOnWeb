@@ -28,7 +28,19 @@ class UserController
     {
         require_once __DIR__ . '/../../view/login.php';
     }
-    
+    public function updatePage(): void
+    {
+        $id = $_GET['id'];
+
+        $user = $this->userRepository->findById($id);
+        require_once __DIR__ . "/../../view/profile.php";
+    }
+
+    public function updatePWDForm(): void
+    {
+        require_once __DIR__ . "/../../view/edit-userpwd.php";
+    }
+
     public function DeleteUser(): void
     {
         $id = $_GET['id'];
@@ -40,33 +52,24 @@ class UserController
         }
     }
 
-    public function updatePage(): void
-    {
-        $id = $_GET['id'];
+    /*
+     * Atualiza somente a senha
+     */
 
-        $user = $this->userRepository->findById($id);
-        require_once __DIR__ . "/../../view/profile.php";
-    }
-
-    public function updateUser(): void
+    public function updatePWD(): void
     {
-        $id = $_REQUEST['id'];
-        $name = $_REQUEST['name'];
-        $email = $_REQUEST['email'];
-        $password = $_REQUEST['password'] ?? '';
-        $confirm_password = $_REQUEST['confirm_password'] ?? '';
+        $currentPassword = filter_input(INPUT_POST, 'current_password');
+        $password = filter_input(INPUT_POST, 'password');
+        $confirm_password =  filter_input(INPUT_POST, 'confirm_password');
 
         if ($password !== $confirm_password) {
             $_SESSION['sweet_alert'] = 'As senhas não coincidem!';
-            header("Location: /user?id=" . $id);
+            header("Location: /profile?id=" . $id);
             exit;
         }
 
-        $user = new User($name, $email, $role);
-
-        
         if (!empty($password)) {
-            $encrypted = password_hash($password, PASSWORD_BCRYPT);    
+            $encrypted = password_hash($password, PASSWORD_BCRYPT);
 
             $user->setPassword($encrypted);
 
@@ -76,12 +79,23 @@ class UserController
                 exit;
             } else {
                 $_SESSION['updateError'] = 'Erro ao atualizar o usuário!';
-                header("Location: /user?id=" . $id);
+                header("Location: /profile?id=" . $id);
                 exit;
             }
         }
+    }
 
-        
+    /*
+     * Controlador de edicao de usuarios
+     */
+    public function updateUser(): void
+    {
+        $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+        $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+
+        $user = new User($name, $email);
+
         if($this->userRepository->update($id, $user)){
             $_SESSION['update'] = 'Usuário atualizado com sucesso!';
             header('Location: /profile?id=' . $id);

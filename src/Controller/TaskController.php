@@ -19,7 +19,8 @@ class TaskController
     }
     public function dashboardPage(): void
     {
-        $tasks = $this->taskRepository->all();
+        $id = $_SESSION['id'];
+        $tasks = $this->taskRepository->all($id);
         require_once __DIR__ . '/../../view/dashboard.php';
     }
 
@@ -47,13 +48,16 @@ class TaskController
     public function addTask(): void
     {
         $userId = $_SESSION['id'];
-        $name = $_POST['name'];
-        $description = $_POST['description'];
-        $dueDate = $_POST['due_date'];
-        $priority = $_POST['priority'];
-        $category = $_POST['category'];
+        $taskName = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_SPECIAL_CHARS);
+        $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_SPECIAL_CHARS);
+        $dueDate = filter_input(INPUT_POST, 'due_date');
+        $priority = filter_input(INPUT_POST, 'priority', FILTER_VALIDATE_INT);
+        $category = filter_input(INPUT_POST, 'category');
 
-        $task = new Task($userId, $name, $description, $dueDate, $priority, $category);
+
+        $task = new Task($taskName, $description, $priority, $category);
+        $task->setDueDate($dueDate);
+        $task->setUserId($userId);
 
         if($this->taskRepository->add($task)){
             header('Location: /?taskSuccess=1');
@@ -65,13 +69,22 @@ class TaskController
     public function updateTask(): void
     {
         $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-        $taskName = filter_input(INPUT_POST, 'name');
-        $description = filter_input(INPUT_POST, 'description');
+        $taskName = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_SPECIAL_CHARS);
+        $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_SPECIAL_CHARS);
         $dueDate = filter_input(INPUT_POST, 'due_date');
-        $priority = 1;
-        $category = 1;
+        $priority = filter_input(INPUT_POST, 'priority', FILTER_VALIDATE_INT);
+        $category = filter_input(INPUT_POST, 'category');
 
-        var_dump ($id);
+
+        $task = new Task($taskName, $description, $priority, $category);
+        $task->setDueDate($dueDate);
+        $task->setId($id);
+
+        if ($this->taskRepository->update($task)){
+            header('Location: /?sucesso=1');
+        } else {
+            header('Location: /?sucesso=0');
+        }
     }
 
     public function deleteTask(): void

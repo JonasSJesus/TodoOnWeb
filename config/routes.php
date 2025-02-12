@@ -13,8 +13,9 @@ return [
     'GET|/cadastro' => [UserController::class, 'userCadForm'],
     'GET|/login' => [UserController::class, 'userLoginForm'],
     'GET|/profile' => [UserController::class, 'updatePage'],
-    'GET|/logout' => [AuthController::class, 'logout'],
+    'GET|/edit-pwd' => [UserController::class, 'updatePWDForm'],
     'GET|/delete-user' => [UserController::class, 'DeleteUser'],
+    'GET|/logout' => [AuthController::class, 'logout'],
 
     'POST|/tarefas' => [TaskController::class, 'addTask'],
     'POST|/edit-task' => [TaskController::class, 'updateTask'],

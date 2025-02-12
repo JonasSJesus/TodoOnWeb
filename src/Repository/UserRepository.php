@@ -25,7 +25,7 @@ class UserRepository
         return array_map($this->hydrateUser(...), $users);
     }
 
-    public function findByEmail($email): User|null
+    public function findByEmail(string $email): User|null
     {
         $stmt = $this->pdo->prepare(
             'SELECT * FROM users WHERE email = ?;
@@ -59,10 +59,6 @@ class UserRepository
         }
     }
 
-    public function findLastId(): int
-    {
-        return $this->pdo->lastInsertId();
-    }
 
     public function add(User $user): User|null
     {
@@ -106,11 +102,8 @@ class UserRepository
     public function updatePWD(int $id, User $user): bool
     {
         $stmt = $this->pdo->prepare('
-            UPDATE users SET name = ?, email = ?, is_admin = ?, password = ? WHERE id = ?;
+            UPDATE users SET password = ? WHERE id = ?;
         ');
-        $stmt->bindValue(1, $user->name);
-        $stmt->bindValue(2, $user->email);
-        $stmt->bindValue(3, $user->role);
         $stmt->bindValue(4, $user->password);
         $stmt->bindValue(5, $id);
 

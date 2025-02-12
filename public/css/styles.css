@@ -261,7 +261,7 @@ nav {
 
 .profile-section:last-child {
     border-bottom: none;
-    margin-bottom: 0;
+    margin-bottom: 20px;
     padding-bottom: 0;
 }
 
@@ -271,7 +271,8 @@ nav {
 }
 
 .danger-zone {
-    background-color: #fef2f2;
+    margin-bottom: 0;
+    background-color: #ffcfcf;
     padding: 1.5rem;
     border-radius: 0.5rem;
 }

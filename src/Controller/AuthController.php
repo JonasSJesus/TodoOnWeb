@@ -16,6 +16,14 @@ class AuthController
         $this->taskRepository = $taskRepository;
         $this->userRepository = $userRepository;
         if (session_status() === PHP_SESSION_NONE) {
+            session_set_cookie_params([
+                'lifetime' => 0,          // Expira ao fechar o navegador
+                'path' => '/',            // Válido em todo o site
+                'domain' => '',           // Mesmo domínio
+                'httponly' => true,       // Impede acesso via JavaScript
+                'samesite' => 'Strict'    // Previne ataques CSRF
+            ]);
+
             session_start();
             session_regenerate_id();
         }
@@ -88,7 +96,7 @@ class AuthController
     private function createSession(User $user)
     {
         $_SESSION['logado'] = true;
-        $_SESSION['id'] = $user->id;
+        $_SESSION['id'] = $user->getId();
         $_SESSION['email'] = $user->email;
         $_SESSION['nome'] = $user->name;
         $_SESSION['role'] = $user->role;

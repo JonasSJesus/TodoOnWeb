@@ -1,4 +1,4 @@
-    <?php require_once 'Includes/header.php'; ?>
+<?php require_once 'Includes/header.php'; ?>
 
     <main class="container">
         <form class="task-form" method="post">
@@ -18,7 +18,7 @@
             <div class="form-row">
                 <div class="form-group">
                     <label for="due_date">Due Date <span class="todo">AINDA NÃO ESTÁ FUNCIONANDO!</span></label>
-                    <input type="date" id="due_date" value="2020-04-20" required>
+                    <input type="date" id="due_date" name="due_date" >
                 </div>
 
                 <div class="form-group">

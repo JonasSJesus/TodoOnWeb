@@ -27,18 +27,24 @@ class TaskRepository
         return $stmt->execute();
     }
 
-    public function all(): array
+    public function all(int|null $id = null): array
     {
+        $idUser = $id !== null ? 'WHERE user_id = :id' : '';
         $stmt = $this->pdo->query(
-            'SELECT * FROM tasks;'
+            "SELECT * FROM tasks $idUser;"
         );
+
+        if ($id !== null) {
+            $stmt->bindValue(':id', $id);
+            $stmt->execute();
+        }
 
         $tasks = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         return array_map($this->hydrate(...),$tasks);
     }
 
-    public function readById(int $id)
+    public function readById(int $id): Task
     {
         $stmt = $this->pdo->prepare(
             'SELECT * FROM tasks WHERE id = :id'
@@ -62,22 +68,25 @@ class TaskRepository
     public function update(Task $task): bool
     {
         $stmt = $this->pdo->prepare('
-            UPDATE tasks SET name = :name, description = :description, priority = :priority, category = :category WHERE id = :id;
+            UPDATE tasks SET name = :name, description = :description, due_date = :due_date, priority = :priority, category = :category WHERE id = :id;
         ');
         $stmt->bindValue(':name', $task->name);
         $stmt->bindValue(':description', $task->description);
+        $stmt->bindValue(':due_date', $task->due_date);
         $stmt->bindValue(':priority', $task->priority);
         $stmt->bindValue(':category', $task->category);
-        $stmt->bindValue(':id', $task->id);
+        $stmt->bindValue(':id', $task->getId());
 
         return $stmt->execute();
     }
 
     private function hydrate(array $data): Task
     {
-        $task = new Task($data['user_id'], $data['name'], $data['description'], $data['due_date'], $data['priority'], $data['category']);
+        $task = new Task($data['name'], $data['description'], $data['priority'], $data['category']);
         $task->setId($data['id']);
+        $task->setUserId($data['user_id']);
         $task->setCreated_at($data['created_at']);
+        $task->setDueDate($data['due_date']);
 
         return $task;
     }

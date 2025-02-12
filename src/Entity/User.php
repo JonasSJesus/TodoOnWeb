@@ -4,7 +4,7 @@ namespace Todo\Entity;
 
 class User
 {
-    public readonly int $id;
+    private int $id;
     public readonly string $name;
     public readonly string $email;
     public readonly string $password;
@@ -21,6 +21,11 @@ class User
     { 
         $this->id = $id;
     }
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
 
     public function setPassword(?string $password): void
     {
