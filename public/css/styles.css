@@ -214,15 +214,15 @@ nav {
     border-left: 4px solid transparent;
 }
 
-.task-card.priority-high {
+.task-card.priority-3 {
     border-left-color: #dc2626;
 }
 
-.task-card.priority-medium {
+.task-card.priority-2 {
     border-left-color: #f59e0b;
 }
 
-.task-card.priority-low {
+.task-card.priority-1{
     border-left-color: #10b981;
 }
 

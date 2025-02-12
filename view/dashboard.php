@@ -22,7 +22,7 @@
             <div class="tasks">
 
                 <?php foreach ($tasks as $task): ?>
-                <div class="task-card priority-low">
+                <div class="task-card priority-<?= $task->priority; ?>">
                     <h3><?= $task->name; ?></h3>
                     <p><?= $task->description; ?></p>
                     <div class="task-meta">
@@ -31,7 +31,7 @@
                     </div>
                     <div class="task-actions">
                         <a href="/edit-task?id=<?= $task->id; ?>" class="btn-secondary">Edit</a>
-                        <button class="btn-danger"><a href="/delete-task?id=<?= $task->id; ?>">Deletar</a></button>
+                        <a class="btn-danger" href="/delete-task?id=<?= $task->id; ?>">Deletar</a>
                     </div>
                 </div>
                 <?php endforeach; ?>

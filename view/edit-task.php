@@ -17,27 +17,30 @@
 
             <div class="form-row">
                 <div class="form-group">
-                    <label for="due_date">Due Date</label>
-                    <input type="date" id="due_date" value="2024-03-20" required>
+                    <label for="due_date">Due Date <span class="todo">AINDA NÃO ESTÁ FUNCIONANDO!</span></label>
+                    <input type="date" id="due_date" value="2020-04-20" required>
                 </div>
 
                 <div class="form-group">
                     <label for="priority">Priority</label>
-                    <select id="priority" required>
-                        <option value="low">Low</option>
-                        <option value="medium">Medium</option>
-                        <option value="high" selected>High</option>
+                    <select id="priority" name="priority" required>
+                        <option value="1">Low</option>
+                        <option value="2">Medium</option>
+                        <option value="3" selected>High</option>
                     </select>
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="category">Category</label>
-                <select id="category" required>
-                    <option value="work" selected>Work</option>
-                    <option value="personal">Personal</option>
-                    <option value="shopping">Shopping</option>
-                    <option value="other">Other</option>
+                <select id="category" name="category" required>
+                    <option value="Trabalho">Trabalho</option>
+                    <option value="Pessoal">Pessoal</option>
+                    <option value="Estudo">Estudo</option>
+                    <option value="Lazer">Lazer</option>
+                    <option value="Casa">Casa</option>
+                    <option value="Saude">Saude</option>
+                    <option value="Outros">Outros</option>
                 </select>
             </div>
 

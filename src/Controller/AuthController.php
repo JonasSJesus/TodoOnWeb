@@ -117,6 +117,8 @@ class AuthController
 
         if(in_array($path, $admin_router) && !$this->isAdmin()){
             echo "Somente admin pode entrar aqui!";
+            echo "<br>";
+            var_dump ($_SESSION);
             exit;
         }
     }
@@ -129,7 +131,7 @@ class AuthController
 
     public function isAdmin(): bool
     {
-        return isset($_SESSION['is_admin']) and $_SESSION['is_admin'] == 1;
+        return isset($_SESSION['role']) and $_SESSION['role'] === 'admin';
     }
 }
 

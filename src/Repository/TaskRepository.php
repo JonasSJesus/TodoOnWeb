@@ -59,11 +59,18 @@ class TaskRepository
         return $stmt->execute();
     }
 
-    public function update(Task $task)
+    public function update(Task $task): bool
     {
         $stmt = $this->pdo->prepare('
-            UPDATE tasks SET name;
+            UPDATE tasks SET name = :name, description = :description, priority = :priority, category = :category WHERE id = :id;
         ');
+        $stmt->bindValue(':name', $task->name);
+        $stmt->bindValue(':description', $task->description);
+        $stmt->bindValue(':priority', $task->priority);
+        $stmt->bindValue(':category', $task->category);
+        $stmt->bindValue(':id', $task->id);
+
+        return $stmt->execute();
     }
 
     private function hydrate(array $data): Task

@@ -64,14 +64,14 @@ class TaskController
 
     public function updateTask(): void
     {
-        $id = 1;
+        $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
         $taskName = filter_input(INPUT_POST, 'name');
         $description = filter_input(INPUT_POST, 'description');
         $dueDate = filter_input(INPUT_POST, 'due_date');
         $priority = 1;
         $category = 1;
 
-        var_dump ($_POST['description']);
+        var_dump ($id);
     }
 
     public function deleteTask(): void
