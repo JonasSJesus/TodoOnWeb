@@ -14,12 +14,13 @@ return [
     'GET|/login' => [UserController::class, 'userLoginForm'],
     'GET|/profile' => [UserController::class, 'updatePage'],
     'GET|/edit-pwd' => [UserController::class, 'updatePWDForm'],
-    'GET|/delete-user' => [UserController::class, 'DeleteUser'],
+    'GET|/delete-user' => [UserController::class, 'deleteUser'],
     'GET|/logout' => [AuthController::class, 'logout'],
 
     'POST|/tarefas' => [TaskController::class, 'addTask'],
     'POST|/edit-task' => [TaskController::class, 'updateTask'],
     'POST|/cadastro' => [AuthController::class, 'addUser'],
     'POST|/login' => [AuthController::class, 'login'],
-    'POST|/profile' => [UserController::class, 'updateUser']
+    'POST|/profile' => [UserController::class, 'updateUser'],
+    'POST|/edit-pwd' => [UserController::class, 'updatePWD']
 ];

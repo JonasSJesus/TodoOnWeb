@@ -10,7 +10,7 @@
 <body>
     <header>
         <nav>
-            <div class="logo">TaskMaster</div>
+            <a href="/" class="logo" style="text-decoration: none;">TaskMaster</a>
             <div class="nav-links">
                 <a href="/admin">Admin</a>
                 <a href="/" >Dashboard</a>

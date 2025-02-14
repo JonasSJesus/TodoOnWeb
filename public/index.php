@@ -3,7 +3,6 @@
 use Todo\Controller\AuthController;
 use Todo\Repository\TaskRepository;
 use Todo\Repository\UserRepository;
-use PDO;
 
 
 require_once 'errors.php';
@@ -31,4 +30,6 @@ if (array_key_exists($routesKey, $routes)){
 
     $controller = new $class($taskRepository, $userRepository);
     $controller->$method();
+} else {
+    http_response_code(404);
 }

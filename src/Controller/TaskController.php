@@ -17,6 +17,11 @@ class TaskController
         $this->userRepository = $userRepository;
 
     }
+
+    /*
+     * Renderizacao de templates:
+     *
+     * */
     public function dashboardPage(): void
     {
         $id = $_SESSION['id'];
@@ -45,6 +50,12 @@ class TaskController
         require_once __DIR__ . "/../../view/admin.php";
     }
 
+
+
+    /*
+     * Controller CRUD:
+     */
+
     public function addTask(): void
     {
         $userId = $_SESSION['id'];
@@ -66,6 +77,8 @@ class TaskController
         }
     }
 
+
+
     public function updateTask(): void
     {
         $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
@@ -86,6 +99,8 @@ class TaskController
             header('Location: /?sucesso=0');
         }
     }
+
+
 
     public function deleteTask(): void
     {

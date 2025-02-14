@@ -124,9 +124,8 @@ class AuthController
         }
 
         if(in_array($path, $admin_router) && !$this->isAdmin()){
-            echo "Somente admin pode entrar aqui!";
-            echo "<br>";
-            var_dump ($_SESSION);
+            header('Location: /');
+            http_response_code(401);
             exit;
         }
     }

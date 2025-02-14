@@ -41,7 +41,11 @@ class UserController
         require_once __DIR__ . "/../../view/edit-userpwd.php";
     }
 
-    public function DeleteUser(): void
+    /*
+     * Controllers de CRUD:
+     * */
+
+    public function deleteUser(): void
     {
         $id = $_GET['id'];
 
@@ -52,12 +56,13 @@ class UserController
         }
     }
 
-    /*
-     * Atualiza somente a senha
-     */
 
+
+
+//    TODO: implementar update de senhas ===============================================================================
     public function updatePWD(): void
     {
+        $id = $_SESSION['id'];
         $currentPassword = filter_input(INPUT_POST, 'current_password');
         $password = filter_input(INPUT_POST, 'password');
         $confirm_password =  filter_input(INPUT_POST, 'confirm_password');
@@ -85,9 +90,8 @@ class UserController
         }
     }
 
-    /*
-     * Controlador de edicao de usuarios
-     */
+
+
     public function updateUser(): void
     {
         $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);

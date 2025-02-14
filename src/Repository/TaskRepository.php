@@ -12,6 +12,7 @@ class TaskRepository
         $this->pdo = $pdo;
     }
 
+
     public function add(Task $task): bool
     {
         $stmt = $this->pdo->prepare(
@@ -26,6 +27,8 @@ class TaskRepository
 
         return $stmt->execute();
     }
+
+
 
     public function all(int|null $id = null): array
     {
@@ -44,6 +47,8 @@ class TaskRepository
         return array_map($this->hydrate(...),$tasks);
     }
 
+
+
     public function readById(int $id): Task
     {
         $stmt = $this->pdo->prepare(
@@ -56,6 +61,8 @@ class TaskRepository
         return $this->hydrate($data);
     }
 
+
+
     public function delete(int $id): bool
     {
         $stmt = $this->pdo->prepare(
@@ -64,6 +71,8 @@ class TaskRepository
         $stmt->bindValue(':id', $id);
         return $stmt->execute();
     }
+
+
 
     public function update(Task $task): bool
     {
@@ -79,6 +88,8 @@ class TaskRepository
 
         return $stmt->execute();
     }
+
+
 
     private function hydrate(array $data): Task
     {
