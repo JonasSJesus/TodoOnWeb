@@ -6,6 +6,7 @@ use Todo\Controller\UserController;
 
 return [
     'GET|/' => [TaskController::class, 'dashboardPage'],
+    'GET|/home' => [TaskController::class, 'homePage'],
     'GET|/admin' => [TaskController::class, 'adminPage'],
     'GET|/tarefas' => [TaskController::class, 'userTaskPage'],
     'GET|/edit-task' => [TaskController::class, 'taskForm'],

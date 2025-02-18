@@ -33,9 +33,9 @@ class AuthController
     // Adiciona Usuários 
     public function addUser(): void
     {
-        $name = $_POST['name'];
-        $email = $_POST['email'];
-        $password = $_POST['password'];
+        $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_SPECIAL_CHARS);
+        $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+        $password = filter_input(INPUT_POST, 'password');
         $encrypted = password_hash($password, PASSWORD_BCRYPT);
         $confirm_password = $_POST['confirm_password'];
 
@@ -69,7 +69,7 @@ class AuthController
     }
 
     // Validação de credenciais
-    public function login()
+    public function login(): void
     {
         $email = $_REQUEST['email'];
         $password = $_REQUEST['password'];
@@ -93,7 +93,7 @@ class AuthController
     }
 
     //  Criação de sessão
-    private function createSession(User $user)
+    private function createSession(User $user): void
     {
         $_SESSION['logado'] = true;
         $_SESSION['id'] = $user->getId();
@@ -104,7 +104,7 @@ class AuthController
     }
 
     // Destrói a Sessão atual
-    public function logout()
+    public function logout(): void
     {
         session_destroy();
         header('Location: /login');
@@ -114,12 +114,12 @@ class AuthController
     // Pede autenticação
     public function checkAccess($path): void
     {
-        $public_routes = ['/login', '/cadastro'];
+        $public_routes = ['/login', '/cadastro', '/home'];
         $admin_router = ['/admin'];
 
 
         if(!in_array($path, $public_routes) && !$this->isLogged()){
-            header('Location: /login');
+            header('Location: /home');
             exit;
         }
 

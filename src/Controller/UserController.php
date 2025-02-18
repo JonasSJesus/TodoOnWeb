@@ -31,8 +31,15 @@ class UserController
     public function updatePage(): void
     {
         $id = $_GET['id'];
+        $userLoggedId = $_SESSION['id'];
+
+        if($id != $userLoggedId){
+            header('Location: /profile?id='.$userLoggedId);
+        }
+
 
         $user = $this->userRepository->findById($id);
+
         require_once __DIR__ . "/../../view/profile.php";
     }
 

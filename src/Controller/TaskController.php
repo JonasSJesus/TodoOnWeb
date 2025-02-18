@@ -22,6 +22,11 @@ class TaskController
      * Renderizacao de templates:
      *
      * */
+    public function homePage(): void
+    {
+        require_once __DIR__ . '/../../view/home.php';
+    }
+
     public function dashboardPage(): void
     {
         $id = $_SESSION['id'];

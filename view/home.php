@@ -48,7 +48,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2024 TaskMaster. All rights reserved.</p>
+        <p>© 2024 TaskMaster.</p>
     </footer>
 </body>
 </html>

@@ -49,9 +49,16 @@ class Task
         $this->due_date = $due_date;
     }
 
-    public function getDueDate(): string
+    public function getDueDate(): ?string
     {
-        return $this->due_date;
+        $db_date = $this->due_date;
+
+        if (!$db_date) {
+            return null;
+        }
+
+        return date('M d, Y', strtotime($db_date));
+
     }
 
 }

@@ -23,11 +23,11 @@
 
                 <?php foreach ($tasks as $task): ?>
                 <div class="task-card priority-<?= $task->priority; ?>">
-                    <h3><?= $task->name; ?></h3>
-                    <p><?= $task->description; ?></p>
+                    <h3><?= htmlentities($task->name); ?></h3>
+                    <p><?= htmlentities($task->description); ?></p>
                     <div class="task-meta">
                         <span class="category"><?= $task->category; ?></span>
-                        <span class="due-date"><?= $task->due_date; ?></span>
+                        <span class="due-date"><?= 'Due: ' . $task->getDueDate(); ?></span>
                     </div>
                     <div class="task-actions">
                         <a href="/edit-task?id=<?= $task->getId(); ?>" class="btn-secondary">Edit</a>
