@@ -34,7 +34,7 @@ class UserController
         $userLoggedId = $_SESSION['id'];
 
         if($id != $userLoggedId){
-            header('Location: /profile?id='.$userLoggedId);
+            header('Location: /profile?id=' . $userLoggedId);
         }
 
 

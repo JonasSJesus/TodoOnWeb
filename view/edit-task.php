@@ -24,9 +24,9 @@
                 <div class="form-group">
                     <label for="priority">Priority</label>
                     <select id="priority" name="priority" required>
-                        <option value="1">Low</option>
-                        <option value="2">Medium</option>
-                        <option value="3" selected>High</option>
+                        <option value="1" <?= $task->priority === 1 ? 'selected' : ''; ?> >Low</option>
+                        <option value="2" <?= $task->priority === 2 ? 'selected' : ''; ?> >Medium</option>
+                        <option value="3" <?= $task->priority === 3 ? 'selected' : ''; ?> >High</option>
                     </select>
                 </div>
             </div>
@@ -34,13 +34,12 @@
             <div class="form-group">
                 <label for="category">Category</label>
                 <select id="category" name="category" required>
-                    <option value="Trabalho">Trabalho</option>
-                    <option value="Pessoal">Pessoal</option>
-                    <option value="Estudo">Estudo</option>
-                    <option value="Lazer">Lazer</option>
-                    <option value="Casa">Casa</option>
-                    <option value="Saude">Saude</option>
-                    <option value="Outros">Outros</option>
+                    <option value="Trabalho" <?= $task->category === "Trabalho" ? 'selected' : ''; ?> >Trabalho</option>
+                    <option value="Pessoal" <?= $task->category === "Pessoal" ? 'selected' : ''; ?> >Pessoal</option>
+                    <option value="Estudo" <?= $task->category === "Estudo" ? 'selected' : ''; ?> >Estudo</option>
+                    <option value="Lazer" <?= $task->category === "Lazer" ? 'selected' : ''; ?> >Lazer</option>
+                    <option value="Casa" <?= $task->category === "Casa" ? 'selected' : ''; ?> >Casa</option>
+                    <option value="Saude" <?= $task->category === "Saude" ? 'selected' : ''; ?> >Saude</option>
                 </select>
             </div>
 

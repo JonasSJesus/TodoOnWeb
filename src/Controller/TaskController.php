@@ -36,14 +36,20 @@ class TaskController
 
     public function userTaskPage(): void
     {
-        $tasks = $this->taskRepository->all();
         require_once __DIR__ . '/../../view/add-task.php';
     }
 
     public function taskForm()
     {
         $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+
+
         $task = $this->taskRepository->readById($id);
+
+        if (($task->user_id != $_SESSION['id'])){
+            header('Location: /');
+        }
+
         require_once __DIR__ . "/../../view/edit-task.php";
     }
 
