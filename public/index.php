@@ -18,8 +18,13 @@ $routesKey = "$method|$path";
 
 $userRepository = new UserRepository($pdo);
 $taskRepository = new TaskRepository($pdo);
+$dependencies = [
+    'task' => $taskRepository, 
+    'user' => $userRepository
+];
 
-$authController = new AuthController($taskRepository, $userRepository);
+
+$authController = new AuthController($dependencies);
 
 
 $authController->checkAccess($path);
@@ -28,7 +33,7 @@ $authController->checkAccess($path);
 if (array_key_exists($routesKey, $routes)){
     [$class, $method] = $routes[$routesKey];
 
-    $controller = new $class($taskRepository, $userRepository);
+    $controller = new $class($dependencies);
     $controller->$method();
 } else {
     http_response_code(404);

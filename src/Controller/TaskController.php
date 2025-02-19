@@ -11,10 +11,10 @@ class TaskController
     private TaskRepository $taskRepository;
     private UserRepository $userRepository;
 
-    public function __construct(TaskRepository $taskRepository, UserRepository $userRepository)
+    public function __construct(array $repository)
     {
-        $this->taskRepository = $taskRepository;
-        $this->userRepository = $userRepository;
+        $this->taskRepository = $repository['task'];
+        $this->userRepository = $repository['user'];
 
     }
 
@@ -42,9 +42,12 @@ class TaskController
     public function taskForm()
     {
         $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+        
+        $task = $this->taskRepository->readById($id) ?? '';
 
-
-        $task = $this->taskRepository->readById($id);
+        if (!$task){
+            header('Location: /');
+        }
 
         if (($task->user_id != $_SESSION['id'])){
             header('Location: /');

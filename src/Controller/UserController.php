@@ -8,13 +8,13 @@ use Todo\Repository\UserRepository;
 
 class UserController
 {
-    private TaskRepository $taskRepository;
+    #private TaskRepository $taskRepository;
     private UserRepository $userRepository;
 
-    public function __construct(TaskRepository $taskRepository, UserRepository $userRepository)
+    public function __construct(array $repository)
     {
-        $this->taskRepository = $taskRepository;
-        $this->userRepository = $userRepository;
+        #$this->taskRepository = $repository['task'];
+        $this->userRepository = $repository['user'];
 
     }
 
@@ -57,9 +57,9 @@ class UserController
         $id = $_GET['id'];
 
         if($this->userRepository->delete($id)){
-            header('Location: /admin?sucesso=1');
+            header('Location: /home?sucesso=1');
         } else {
-            header('Location /admin?sucesso=0');
+            header('Location /home?sucesso=0');
         }
     }
 

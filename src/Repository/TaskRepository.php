@@ -49,16 +49,26 @@ class TaskRepository
 
 
 
-    public function readById(int $id): Task
+    public function readById(int $id)
     {
-        $stmt = $this->pdo->prepare(
-            'SELECT * FROM tasks WHERE id = :id'
-        );
-        $stmt->bindValue(':id', $id);
-        $stmt->execute();
+        try {
+            $stmt = $this->pdo->prepare(
+                'SELECT * FROM tasks WHERE id = :id'
+            );
+            $stmt->bindValue(':id', $id);
+            $stmt->execute();
+            
+            $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $data = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $this->hydrate($data);
+            if (!$data) {
+                return null;
+            }
+
+            return $this->hydrate($data);
+            
+        } catch (\PDOException $e) {
+            return $e->getMessage();
+        }
     }
 
 
@@ -98,7 +108,6 @@ class TaskRepository
         $task->setUserId($data['user_id']);
         $task->setCreated_at($data['created_at']);
         $task->setDueDate($data['due_date']);
-
         return $task;
     }
 }

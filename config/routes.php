@@ -1,11 +1,13 @@
 <?php
+use Todo\Repository\TaskRepository;
+use Todo\Repository\UserRepository;
 
 use Todo\Controller\AuthController;
 use Todo\Controller\TaskController;
 use Todo\Controller\UserController;
 
 return [
-    'GET|/' => [TaskController::class, 'dashboardPage'],
+    'GET|/' => [TaskController::class, 'dashboardPage'], 
     'GET|/home' => [TaskController::class, 'homePage'],
     'GET|/admin' => [TaskController::class, 'adminPage'],
     'GET|/tarefas' => [TaskController::class, 'userTaskPage'],

@@ -1,4 +1,7 @@
-<?php require_once 'Includes/header.php'; ?>
+<?php 
+  require_once 'Includes/header.php';
+  /* @var Task $task  */
+?>
 
     <main class="container">
         <form class="task-form" method="post">

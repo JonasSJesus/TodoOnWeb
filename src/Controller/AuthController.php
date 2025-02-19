@@ -8,13 +8,12 @@ use Todo\Repository\UserRepository;
 
 class AuthController 
 {
-    private TaskRepository $taskRepository;
     private UserRepository $userRepository;
 
-    public function __construct(TaskRepository $taskRepository, UserRepository $userRepository)
+    public function __construct(array $repository)
     {
-        $this->taskRepository = $taskRepository;
-        $this->userRepository = $userRepository;
+        $this->userRepository = $repository['user'];
+        
         if (session_status() === PHP_SESSION_NONE) {
             session_set_cookie_params([
                 'lifetime' => 0,          // Expira ao fechar o navegador
