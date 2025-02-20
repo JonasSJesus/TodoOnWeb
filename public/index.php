@@ -3,6 +3,8 @@
 use Todo\Controller\AuthController;
 use Todo\Repository\TaskRepository;
 use Todo\Repository\UserRepository;
+use Todo\Service\AuthService;
+
 
 
 require_once 'errors.php';
@@ -18,16 +20,16 @@ $routesKey = "$method|$path";
 
 $userRepository = new UserRepository($pdo);
 $taskRepository = new TaskRepository($pdo);
+$authService = new AuthService($userRepository);
+
 $dependencies = [
-    'task' => $taskRepository, 
-    'user' => $userRepository
+    'taskRepository' => $taskRepository,
+    'userRepository' => $userRepository,
+    'authService' => $authService
 ];
 
 
-$authController = new AuthController($dependencies);
-
-
-$authController->checkAccess($path);
+$authService->checkAccess($path);
 
 
 if (array_key_exists($routesKey, $routes)){

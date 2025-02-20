@@ -5,55 +5,43 @@ namespace Todo\Controller;
 use Todo\Entity\User;
 use Todo\Repository\TaskRepository;
 use Todo\Repository\UserRepository;
+use Todo\Service\AuthService;
 
 class AuthController 
 {
-    private UserRepository $userRepository;
+    #private UserRepository $userRepository;
+    private AuthService $authService;
 
-    public function __construct(array $repository)
+    public function __construct(array $dependencies)
     {
-        $this->userRepository = $repository['user'];
-        
-        if (session_status() === PHP_SESSION_NONE) {
-            session_set_cookie_params([
-                'lifetime' => 0,          // Expira ao fechar o navegador
-                'path' => '/',            // Válido em todo o site
-                'domain' => '',           // Mesmo domínio
-                'httponly' => true,       // Impede acesso via JavaScript
-                'samesite' => 'Strict'    // Previne ataques CSRF
-            ]);
-
-            session_start();
-            session_regenerate_id();
-        }
+        #$this->userRepository = $dependencies['userRepository'];
+        $this->authService = $dependencies['authService'];
 
     }
 
     // Adiciona Usuários 
     public function addUser(): void
     {
-        $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_SPECIAL_CHARS);
-        $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
-        $password = filter_input(INPUT_POST, 'password');
-        $encrypted = password_hash($password, PASSWORD_BCRYPT);
-        $confirm_password = $_POST['confirm_password'];
+        $request = [
+            'name' => filter_input(INPUT_POST, 'name', FILTER_SANITIZE_SPECIAL_CHARS),
+            'email' => filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL),
+            'password' => filter_input(INPUT_POST, 'password'),
+            'confirm_password' => $_POST['confirm_password']
+        ];
 
-        if (!$email or !$password or !$name){
+        if (!$request['email'] or !$request['password'] or !$request['name']){
             $_SESSION['register'] = 'Campos vazios não são permitidos!';
             header("Location: /cadastro");
             exit;
         }
 
-        if ($password !== $confirm_password){
+        if ($request['password'] !== $request['confirm_password']){
             $_SESSION['register'] = 'As senhas não coincidem!';
             header("Location: /cadastro");
             exit;
         }
 
-        $user = new User($name, $email);
-        $user->setPassword($encrypted);
-
-        $savedUser = $this->userRepository->add($user);
+        $savedUser = $this->authService->saveUser($request);
 
         if (!empty($savedUser)){
             $this->createSession($savedUser);
@@ -70,24 +58,29 @@ class AuthController
     // Validação de credenciais
     public function login(): void
     {
-        $email = $_REQUEST['email'];
-        $password = $_REQUEST['password'];
+        $request = [
+            'email' => filter_input(INPUT_POST, 'email'),
+            'password' => filter_input(INPUT_POST, 'password')
+        ];
 
-        if (!$email or !$password){
+        if (!$request['email'] or !$request['password']){
             $_SESSION['login'] = 'Campos vazios não são permitidos!';
             header("Location: /login");
             exit;
         }
 
-        $user = $this->userRepository->findByEmail($email);
 
-        if (!$user or !password_verify($password, $user->password)){
+        $userAuthenticated = $this->authService->authenticate($request);
+
+
+        if ($userAuthenticated === null){
             $_SESSION['login'] = 'Usuario ou senha incorretos!';
             header("Location: /login");
             exit;
         }
 
-        $this->createSession($user);
+
+        $this->createSession($userAuthenticated);
         header ('Location: /');
     }
 
@@ -99,45 +92,18 @@ class AuthController
         $_SESSION['email'] = $user->email;
         $_SESSION['nome'] = $user->name;
         $_SESSION['role'] = $user->role;
-        session_regenerate_id(true);
     }
 
     // Destrói a Sessão atual
     public function logout(): void
     {
-        session_destroy();
-        header('Location: /login');
-        exit;
-    }
+        unset($_SESSION['logado']);
+        unset($_SESSION['id']);
+        unset($_SESSION['email']);
+        unset($_SESSION['nome']);
+        unset($_SESSION['role']);
 
-    // Pede autenticação
-    public function checkAccess($path): void
-    {
-        $public_routes = ['/login', '/cadastro', '/home'];
-        $admin_router = ['/admin'];
-
-
-        if(!in_array($path, $public_routes) && !$this->isLogged()){
-            header('Location: /home');
-            exit;
-        }
-
-        if(in_array($path, $admin_router) && !$this->isAdmin()){
-            header('Location: /');
-            http_response_code(401);
-            exit;
-        }
-    }
-
-    // Verifica se está em uma sessão
-    private function isLogged(): bool
-    {
-        return isset($_SESSION['logado']);
-    }
-
-    public function isAdmin(): bool
-    {
-        return isset($_SESSION['role']) and $_SESSION['role'] === 'admin';
+        header('Location: /home');
     }
 }
 

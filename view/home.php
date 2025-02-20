@@ -7,12 +7,12 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
+    <?= var_dump($_SESSION); ?>
     <header>
         <nav>
             <div class="logo">TaskMaster</div>
-            <div class="nav-links">
-                <a href="/login" class="btn-secondary">Login</a>
-                <a href="/cadastro" class="btn-primary">Register</a>
+            <div>
+                <a href="/login" class="btn-primary primary">Entrar</a>
             </div>
         </nav>
     </header>

@@ -13,8 +13,7 @@ class UserController
 
     public function __construct(array $repository)
     {
-        #$this->taskRepository = $repository['task'];
-        $this->userRepository = $repository['user'];
+        $this->userRepository = $repository['userRepository'];
 
     }
 

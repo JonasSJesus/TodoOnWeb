@@ -99,13 +99,13 @@ class UserRepository
         return $stmt->execute();
     }
 
-    public function updatePWD(int $id, User $user): bool
+    public function updatePWD(int $id, string $password): bool
     {
         $stmt = $this->pdo->prepare('
-            UPDATE users SET password = ? WHERE id = ?;
+            UPDATE users SET password = :password WHERE id = :id;
         ');
-        $stmt->bindValue(4, $user->password);
-        $stmt->bindValue(5, $id);
+        $stmt->bindValue(':password', $password);
+        $stmt->bindValue(':id', $id);
 
         return $stmt->execute();
     }

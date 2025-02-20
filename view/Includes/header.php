@@ -11,7 +11,7 @@
     <header>
         <nav>
             <a href="/home" class="logo" style="text-decoration: none;">TaskMaster</a>
-            <div class="nav-links">
+            <div class="nav-links ancor">
                 <a href="/admin">Admin</a>
                 <a href="/" >Dashboard</a>
                 <a href="/profile?id=<?= $_SESSION['id']; ?>">Profile</a>
