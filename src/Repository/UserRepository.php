@@ -84,9 +84,8 @@ class UserRepository
     }
 
 
-    /*
-     * TODO!!!! usar transações para atualizar a senha no mesmo método --------------------------------------------------------
-     */
+
+
     public function update(int $id, User $user): bool
     {
         $stmt = $this->pdo->prepare('
@@ -109,9 +108,8 @@ class UserRepository
 
         return $stmt->execute();
     }
-    /*
-     * TODO: REFATORAR O MÉTODO updatePWD()!!! -------------------------------------------------------------------------------
-     */
+
+
 
     public function delete(int $id): bool
     {

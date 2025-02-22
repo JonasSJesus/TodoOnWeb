@@ -3,12 +3,15 @@
 namespace Todo\Controller;
 
 use Todo\Entity\User;
+use Todo\Helper\FlashMessagesTrait;
 use Todo\Repository\TaskRepository;
 use Todo\Repository\UserRepository;
 use Todo\Service\AuthService;
 
 class AuthController 
 {
+    use FlashMessagesTrait;
+
     #private UserRepository $userRepository;
     private AuthService $authService;
 
@@ -49,7 +52,7 @@ class AuthController
             header('Location: /');
             exit;
         }else{
-            $_SESSION['register'] = 'Erro ao cadastrar Usuário';
+            $this->errorMessages('Erro ao cadastrar Usuário');
             header("Location: /cadastro");
             exit;
         }
@@ -74,7 +77,7 @@ class AuthController
 
 
         if ($userAuthenticated === null){
-            $_SESSION['login'] = 'Usuario ou senha incorretos!';
+            $this->errorMessages('E-Mail ou Senha incorretos!');
             header("Location: /login");
             exit;
         }
@@ -106,4 +109,3 @@ class AuthController
         header('Location: /home');
     }
 }
-

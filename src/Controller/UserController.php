@@ -3,11 +3,14 @@
 namespace Todo\Controller;
 
 use Todo\Entity\User;
+use Todo\Helper\FlashMessagesTrait;
 use Todo\Repository\TaskRepository;
 use Todo\Repository\UserRepository;
 
 class UserController
 {
+    use FlashMessagesTrait;
+
     #private TaskRepository $taskRepository;
     private UserRepository $userRepository;
 
@@ -58,7 +61,8 @@ class UserController
         if($this->userRepository->delete($id)){
             header('Location: /home?sucesso=1');
         } else {
-            header('Location /home?sucesso=0');
+            $this->errorMessages('Erro ao Deletar Usuário');
+            header('Location /home');
         }
     }
 
@@ -74,7 +78,7 @@ class UserController
         $confirm_password =  filter_input(INPUT_POST, 'confirm_password');
 
         if ($password !== $confirm_password) {
-            $_SESSION['sweet_alert'] = 'As senhas não coincidem!';
+            $this->errorMessages('As senhas não coincidem');
             header("Location: /profile?id=" . $id);
             exit;
         }
@@ -82,14 +86,13 @@ class UserController
         if (!empty($password)) {
             $encrypted = password_hash($password, PASSWORD_BCRYPT);
 
-            $user->setPassword($encrypted);
 
-            if($this->userRepository->updatePWD($id, $user)){
+            if($this->userRepository->updatePWD($id, $encrypted)){
                 $_SESSION['update'] = 'Usuário atualizado com sucesso!';
                 header('Location: /admin?sucesso=1');
                 exit;
             } else {
-                $_SESSION['updateError'] = 'Erro ao atualizar o usuário!';
+                $this->errorMessages('Erro ao atualizar a senha');
                 header("Location: /profile?id=" . $id);
                 exit;
             }
@@ -111,7 +114,7 @@ class UserController
             header('Location: /profile?id=' . $id);
             exit;
         } else {
-            $_SESSION['updateError'] = 'Erro ao atualizar o usuário!';
+            $this->errorMessages('Erro ao atualizar dados do usuário');
             header("Location: /profile?id=" . $id);
             exit;
         }

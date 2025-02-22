@@ -3,11 +3,14 @@
 namespace Todo\Controller;
 
 use Todo\Entity\Task;
+use Todo\Helper\FlashMessagesTrait;
 use Todo\Repository\TaskRepository;
 use Todo\Repository\UserRepository;
 
 class TaskController
 {
+    use FlashMessagesTrait;
+
     private TaskRepository $taskRepository;
     private UserRepository $userRepository;
 
@@ -72,22 +75,28 @@ class TaskController
 
     public function addTask(): void
     {
-        $userId = $_SESSION['id'];
-        $taskName = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_SPECIAL_CHARS);
-        $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_SPECIAL_CHARS);
-        $dueDate = filter_input(INPUT_POST, 'due_date');
-        $priority = filter_input(INPUT_POST, 'priority', FILTER_VALIDATE_INT);
-        $category = filter_input(INPUT_POST, 'category');
+        $request = [
+            'user_id' => $_SESSION['id'],
+            'taskName' => filter_input(INPUT_POST, 'name', FILTER_SANITIZE_SPECIAL_CHARS),
+            'description' => filter_input(INPUT_POST, 'description', FILTER_SANITIZE_SPECIAL_CHARS),
+            'dueDate' => filter_input(INPUT_POST, 'due_date'),
+            'priority' => filter_input(INPUT_POST, 'priority', FILTER_VALIDATE_INT),
+            'category' => filter_input(INPUT_POST, 'category')
+        ];
 
+        var_dump($request);
+        exit();
 
-        $task = new Task($taskName, $description, $priority, $category);
-        $task->setDueDate($dueDate);
-        $task->setUserId($userId);
+        $task = new Task($request['taskName'], $request['description'], $request['priority'], $request['category']);
+        $task->setDueDate($request['dueDate']);
+        $task->setUserId($request['user_id']);
+
 
         if($this->taskRepository->add($task)){
             header('Location: /?taskSuccess=1');
         }else{
-            header('Location: /?taskSuccess=0');
+            $this->errorMessages('Erro ao cadastrar Tarefa');
+            header('Location: /');
         }
     }
 
@@ -95,22 +104,25 @@ class TaskController
 
     public function updateTask(): void
     {
-        $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-        $taskName = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_SPECIAL_CHARS);
-        $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_SPECIAL_CHARS);
-        $dueDate = filter_input(INPUT_POST, 'due_date');
-        $priority = filter_input(INPUT_POST, 'priority', FILTER_VALIDATE_INT);
-        $category = filter_input(INPUT_POST, 'category');
+        $request = [
+            'id' => filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT),
+            'taskName' => filter_input(INPUT_POST, 'name', FILTER_SANITIZE_SPECIAL_CHARS),
+            'description' => filter_input(INPUT_POST, 'description', FILTER_SANITIZE_SPECIAL_CHARS),
+            'dueDate' => filter_input(INPUT_POST, 'due_date'),
+            'priority' => filter_input(INPUT_POST, 'priority', FILTER_VALIDATE_INT),
+            'category' => filter_input(INPUT_POST, 'category')
+        ];
 
 
-        $task = new Task($taskName, $description, $priority, $category);
-        $task->setDueDate($dueDate);
-        $task->setId($id);
+        $task = new Task($request['taskName'], $request['description'], $request['priority'], $request['category']);
+        $task->setDueDate($request['dueDate']);
+        $task->setId($request['id']);
 
         if ($this->taskRepository->update($task)){
             header('Location: /?sucesso=1');
         } else {
-            header('Location: /?sucesso=0');
+            $this->errorMessages('Erro ao atualizar Tarefa');
+            header('Location: /');
         }
     }
 

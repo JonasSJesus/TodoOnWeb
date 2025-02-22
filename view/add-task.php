@@ -7,7 +7,7 @@
             
             <div class="form-group">
                 <label for="name">Task Name</label>
-                <input type="text" id="name" name="name" required>
+                <input type="text" id="name" name="name">
             </div>
 
             <div class="form-group">

@@ -77,7 +77,6 @@ class AuthService
 
         if(in_array($path, $admin_route) && !$this->isAdmin()){
             header('Location: /');
-            http_response_code(401);
         }
     }
 
