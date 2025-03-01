@@ -1,19 +1,16 @@
 <?php
 
-use Todo\Controller\AuthController;
 use Todo\Repository\TaskRepository;
 use Todo\Repository\UserRepository;
 use Todo\Service\AuthService;
 
 
-
 require_once 'errors.php';
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$dbPath = __DIR__ . '/../db.sqlite';
-$pdo = new PDO("sqlite:$dbPath");
-
+$pdo = require_once __DIR__ . '/../config/dbConfig.php';
 $routes = require_once __DIR__ . '/../config/routes.php';
+
 $method = $_SERVER['REQUEST_METHOD'];
 $path = $_SERVER['PATH_INFO'] ?? '/';
 $routesKey = "$method|$path";

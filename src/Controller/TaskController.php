@@ -84,9 +84,6 @@ class TaskController
             'category' => filter_input(INPUT_POST, 'category')
         ];
 
-        var_dump($request);
-        exit();
-
         $task = new Task($request['taskName'], $request['description'], $request['priority'], $request['category']);
         $task->setDueDate($request['dueDate']);
         $task->setUserId($request['user_id']);
