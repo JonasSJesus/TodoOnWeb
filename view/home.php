@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-    <?= var_dump($_SESSION); ?>
     <header>
         <nav>
             <div class="logo">TaskMaster</div>

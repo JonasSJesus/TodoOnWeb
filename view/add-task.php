@@ -17,7 +17,7 @@
 
             <div class="form-row">
                 <div class="form-group">
-                    <label for="due_date">Due Date (<span class="todo">AINDA NÃO ESTA FUNCIONANDO!</span>)</label>
+                    <label for="due_date">Due Date</label>
                     <input type="date" id="due_date" name="due_date">
                 </div>
 

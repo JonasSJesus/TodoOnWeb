@@ -17,9 +17,7 @@ class AuthController
 
     public function __construct(array $dependencies)
     {
-        #$this->userRepository = $dependencies['userRepository'];
         $this->authService = $dependencies['authService'];
-
     }
 
     // Adiciona Usuários 
@@ -35,26 +33,26 @@ class AuthController
         if (!$request['email'] or !$request['password'] or !$request['name']){
             $_SESSION['register'] = 'Campos vazios não são permitidos!';
             header("Location: /cadastro");
-            exit;
+            return;
         }
 
         if ($request['password'] !== $request['confirm_password']){
             $_SESSION['register'] = 'As senhas não coincidem!';
             header("Location: /cadastro");
-            exit;
+            return;
         }
 
         $savedUser = $this->authService->saveUser($request);
 
         if (!empty($savedUser)){
-            $this->createSession($savedUser);
+            $this->authService->createSession($savedUser);
             $_SESSION['register'] = 'Usuário Criado com Sucesso!';
             header('Location: /');
-            exit;
+            return;
         }else{
             $this->errorMessages('Erro ao cadastrar Usuário');
             header("Location: /cadastro");
-            exit;
+            return;
         }
     }
 
@@ -69,32 +67,58 @@ class AuthController
         if (!$request['email'] or !$request['password']){
             $_SESSION['login'] = 'Campos vazios não são permitidos!';
             header("Location: /login");
-            exit;
+            return;
         }
 
-
-        $userAuthenticated = $this->authService->authenticate($request);
-
-
-        if ($userAuthenticated === null){
-            $this->errorMessages('E-Mail ou Senha incorretos!');
-            header("Location: /login");
-            exit;
+        try {
+            $userAuthenticated = $this->authService->authenticate($request['email'], $request['password']);
+            $this->authService->createSession($userAuthenticated);
+            header ('Location: /');
+        } catch (\Exception $e) {
+            $this->errorMessages($e->getMessage())
+            ->withHeader("Location: /login");
+            
         }
 
-
-        $this->createSession($userAuthenticated);
-        header ('Location: /');
     }
 
-    //  Criação de sessão
-    private function createSession(User $user): void
+
+    public function updatePWD(): void
     {
-        $_SESSION['logado'] = true;
-        $_SESSION['id'] = $user->getId();
-        $_SESSION['email'] = $user->email;
-        $_SESSION['nome'] = $user->name;
-        $_SESSION['role'] = $user->role;
+        $request = [
+            'id' => $_SESSION['id'],                // ! Talvez seja reduntante passar o ID dessa forma.
+            'email' => $_SESSION['email'],          // ! E aqui também.
+            'current_password' => filter_input(INPUT_POST, 'current_password'),
+            'password' => filter_input(INPUT_POST, 'password'),
+            'confirm_password' =>  filter_input(INPUT_POST, 'confirm_password')
+        ];
+
+        if (!$request['password'] || !$request['current_password'] || !$request['confirm_password']) {
+            $this
+                ->errorMessages('Todos os campos devem ser preenchidos!')
+                ->withHeader('Location: /edit-pwd')
+            ;
+            return;
+        }
+
+        if ($request['password'] !== $request['confirm_password']) {
+            $this
+                ->errorMessages('As senhas não coincidem')
+                ->withHeader("Location: /edit-pwd")
+            ;
+            return;
+        }
+
+        try {
+            $this->authService->updatePWD($request);
+            $this->errorMessages('Senha alterada com sucesso')
+                ->withHeader("Location: /edit-pwd");
+
+        } catch (\Exception $e) {
+            $this
+                ->errorMessages($e->getMessage())
+                ->withHeader("Location: /edit-pwd");
+        }
     }
 
     // Destrói a Sessão atual

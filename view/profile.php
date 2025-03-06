@@ -20,7 +20,7 @@
                         <input type="email" id="email" name="email" value="<?= $user->email; ?>" required>
                     </div>
                     <button type="submit" class="btn-primary">Update Profile</button>
-                    <a href="/edit-pwd?id=<?= $user->getId(); ?>" class="btn-secondary">Edit Password</a>
+                    <a href="/edit-pwd" class="btn-secondary">Edit Password</a>
                 </div>
             </form>
             <div class="profile-section danger-zone">

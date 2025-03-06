@@ -36,30 +36,6 @@
                 </div>
                 <?php endforeach; ?>
 
-                <div class="task-card priority-medium">
-                    <h3><span class="todo">Tarefa FIXA!</span></h3>
-                    <p>Buy weekly groceries and household items</p>
-                    <div class="task-meta">
-                        <span class="category">Shopping</span>
-                        <span class="due-date">Due: Mar 15, 2024</span>
-                    </div>
-                    <div class="task-actions">
-                        <a href="edit-task.php" class="btn-secondary">Edit</a>
-                        <button class="btn-danger">Delete</button>
-                    </div>
-                </div>
-
-                <div class="task-card priority-high">
-                    <h3><span class="todo">Tarefa FIXA!</span></h3>
-                    <p>Write and review the Q2 project proposal document</p>
-                    <div class="task-meta">
-                        <span class="category">Work</span>
-                        <span class="due-date">Due: Mar 20, 2024</span>
-                    </div>
-                    <div class="task-actions">
-                        <a href="edit-task.php" class="btn-secondary">Edit</a>
-                        <button class="btn-danger">Delete</button>
-                    </div>
                 </div>
             </div>
         </section>

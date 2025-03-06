@@ -84,6 +84,13 @@ class TaskController
             'category' => filter_input(INPUT_POST, 'category')
         ];
 
+
+        if (!$request['taskName'] or !$request['description']){
+            $_SESSION['error_message'] = 'Campos vazios não são permitidos!';
+            header("Location: /tarefas");
+            exit;
+        }
+
         $task = new Task($request['taskName'], $request['description'], $request['priority'], $request['category']);
         $task->setDueDate($request['dueDate']);
         $task->setUserId($request['user_id']);
@@ -111,7 +118,12 @@ class TaskController
         ];
 
 
-        $task = new Task($request['taskName'], $request['description'], $request['priority'], $request['category']);
+        $task = new Task(
+            $request['taskName'], 
+            $request['description'], 
+            $request['priority'], 
+            $request['category']
+        );
         $task->setDueDate($request['dueDate']);
         $task->setId($request['id']);
 

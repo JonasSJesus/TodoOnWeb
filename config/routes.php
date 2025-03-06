@@ -25,5 +25,5 @@ return [
     'POST|/cadastro' => [AuthController::class, 'addUser'],
     'POST|/login' => [AuthController::class, 'login'],
     'POST|/profile' => [UserController::class, 'updateUser'],
-    'POST|/edit-pwd' => [UserController::class, 'updatePWD']
+    'POST|/edit-pwd' => [AuthController::class, 'updatePWD']
 ];

@@ -14,16 +14,17 @@
             <div class="nav-links ancor">
                 <a href="/admin">Admin</a>
                 <a href="/" >Dashboard</a>
-                <a href="/profile?id=<?= $_SESSION['id']; ?>">Profile</a>
+                <a href="/profile">Profile</a>
                 <a href="/tarefas" class="btn-primary">New Task</a>
                 <a href="/logout" class="btn-secondary">Logout</a>
             </div>
         </nav>
     </header>
 
+
 <?php if (isset($_SESSION['error_message'])): ?>
-    <h2 class="formulario__titulo erro" >
+    <h3 class="formulario__titulo erro" >
         <?= $_SESSION['error_message']; ?>
         <?php unset($_SESSION['error_message']); ?>
-    </h2>
+    </h3>
 <?php endif; ?>

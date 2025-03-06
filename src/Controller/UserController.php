@@ -32,16 +32,9 @@ class UserController
     }
     public function updatePage(): void
     {
-        $id = $_GET['id'];
-        $userLoggedId = $_SESSION['id'];
-
-        if($id != $userLoggedId){
-            header('Location: /profile?id=' . $userLoggedId);
-        }
-
+        $id = $_SESSION['id'];
 
         $user = $this->userRepository->findById($id);
-
         require_once __DIR__ . "/../../view/profile.php";
     }
 
@@ -67,43 +60,9 @@ class UserController
     }
 
 
-
-
-//    TODO: implementar update de senhas ===============================================================================
-    public function updatePWD(): void
-    {
-        $id = $_SESSION['id'];
-        $currentPassword = filter_input(INPUT_POST, 'current_password');
-        $password = filter_input(INPUT_POST, 'password');
-        $confirm_password =  filter_input(INPUT_POST, 'confirm_password');
-
-        if ($password !== $confirm_password) {
-            $this->errorMessages('As senhas não coincidem');
-            header("Location: /profile?id=" . $id);
-            exit;
-        }
-
-        if (!empty($password)) {
-            $encrypted = password_hash($password, PASSWORD_BCRYPT);
-
-
-            if($this->userRepository->updatePWD($id, $encrypted)){
-                $_SESSION['update'] = 'Usuário atualizado com sucesso!';
-                header('Location: /admin?sucesso=1');
-                exit;
-            } else {
-                $this->errorMessages('Erro ao atualizar a senha');
-                header("Location: /profile?id=" . $id);
-                exit;
-            }
-        }
-    }
-
-
-
     public function updateUser(): void
     {
-        $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+        $id = $_SESSION['id'];
         $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
 

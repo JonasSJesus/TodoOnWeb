@@ -35,9 +35,10 @@ $pdo->exec("
 */
 
 
-$pdo->exec("
+/*$pdo->exec("
       INSERT INTO users (name, , due_date) VALUES ('Admin', 'admin@admin.com', 'admin', 1);
 ");
+*/
 
 #$stmt = $pdo->query('SELECT * FROM users');
 #var_dump($stmt->fetch(PDO::FETCH_ASSOC));

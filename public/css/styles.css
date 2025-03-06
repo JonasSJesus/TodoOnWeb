@@ -375,3 +375,9 @@ footer {
 .todo {
     color: red;
 }
+
+.formulario__titulo.erro {
+    color: red;
+    margin-top: 1rem;
+    text-align: center;
+}
