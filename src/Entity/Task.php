@@ -44,6 +44,13 @@ class Task
         $this->created_at = $date;
     }
 
+    public function getCreated_at()
+    {
+        $db_date = $this->created_at;
+
+        return date('d/m/Y', strtotime($db_date));
+    }
+
     public function setDueDate(string $due_date): void
     {
         $this->due_date = $due_date;

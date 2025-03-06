@@ -15,31 +15,48 @@ class UserRepository
         $this->pdo = $pdo;
     }
 
-    public function all(): array 
+    public function all(): array|null
     {
-        $stmt = $this->pdo->query(
-            'SELECT * FROM users'
-        );
-        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        try {
+            $stmt = $this->pdo->query(
+                'SELECT * FROM users'
+            );
+            $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        return array_map($this->hydrateUser(...), $users);
+            if (!$users) {
+                return null;
+            }
+            return array_map($this->hydrateUser(...), $users);
+        }catch(PDOException $e){
+            return null;
+        }
     }
 
     public function findByEmail(string $email): User|null
     {
-        $stmt = $this->pdo->prepare(
-            'SELECT * FROM users WHERE email = ?;
-        ');
-        $stmt->bindValue(1, $email);
-        $stmt->execute();
+        try {
+            $stmt = $this->pdo->prepare(
+                'SELECT * FROM users WHERE email = ?;
+            ');
+            $stmt->bindValue(1, $email);
+            $stmt->execute();
+    
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+            if(!$user){
+                return null;
+            }
 
+            return $this->hydrateUser($user);         
+        } catch (PDOException $e) {
+            return null;
+        }
+/*
         if (is_array($user)) {
             return $this->hydrateUser($user);
         } else {
             return null;
-        }
+        }*/
     }
 
     public function findById(int $id): User|null
@@ -72,8 +89,7 @@ class UserRepository
             $stmt->execute();
 
         } catch (PDOException $e) {
-            echo "error:" . $e->getMessage();
-            die();
+            return null;
         }
         
         
@@ -82,8 +98,6 @@ class UserRepository
 
         return $user;
     }
-
-
 
 
     public function update(int $id, User $user): bool
@@ -126,6 +140,7 @@ class UserRepository
         $user = new User($data['name'], $data['email'],  $data['role']);
         $user->setId($data['id']);
         $user->setPassword($data['password']);
+        $user->setCreatedAt($data['created_at']);
 
         return $user;
     }

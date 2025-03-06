@@ -8,6 +8,7 @@ class User
     public readonly string $name;
     public readonly string $email;
     public readonly string $password;
+    private string $created_at;
     public readonly ?string $role;
 
     public function __construct(string $name, string $email, ?string $role = null)
@@ -33,4 +34,16 @@ class User
     }
 
     
+
+    public function getCreatedAt(): string
+    {
+        $db_date = $this->created_at;
+
+        return date('d/m/Y', strtotime($db_date));
+    }
+
+    public function setCreatedAt(string $created_at)
+    {
+        $this->created_at = $created_at;
+    }
 }

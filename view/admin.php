@@ -19,7 +19,7 @@
                         <td><?= $user->getId(); ?></td>
                         <td><?= $user->name; ?></td>
                         <td><?= $user->email; ?></td>
-                        <td>2024-03-10</td>
+                        <td><?= $user->getCreatedAt(); ?></td>
                         <td>
                             <a class="btn-secondary btn-small" href="/profile?id=<?= $user->getId() ?>">Edit</a>
                             <a href="/delete-user?id=<?= $user->getId(); ?>" class="btn-danger btn-small">Delete</a>
@@ -51,8 +51,8 @@
                         <td><?= $task->user_id; ?></td>
                         <td><?= $task->name; ?></td>
                         <td><span class="priority-low"><?= $task->priority; ?></span></td>
-                        <td><?= $task->created_at; ?></td>
-                        <td><?= $task->due_date; ?></td>
+                        <td><?= $task->getCreated_at(); ?></td>
+                        <td><?= $task->getDueDate(); ?></td>
                         <td>
                             <a class="btn-secondary btn-small" href="/edit-task?id=<?= $task->getId() ?>">Edit</a>
                             <a href="/delete-task?id=<?= $task->getId(); ?>" class="btn-danger btn-small">Delete</a>

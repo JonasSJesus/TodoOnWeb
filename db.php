@@ -5,7 +5,7 @@ use Todo\Repository\TaskRepository;
 use Todo\Repository\UserRepository;
 use Todo\Entity\User;
 
-$pdo = new PDO('sqlite:db.sqlite');
+$pdo = new PDO('sqlite:database.sqlite');
 
 /*
 $pdo->exec("
@@ -14,6 +14,7 @@ $pdo->exec("
         name VARCHAR(100) NOT NULL,
         email VARCHAR(100) NOT NULL UNIQUE,
         password VARCHAR(255) NOT NULL,
+        created_at TEXT DEFAULT CURRENT_TIMESTAMP NOT NULL,
         role TEXT CHECK(role IN ('admin', 'user')) DEFAULT 'user'
     );
 ");
@@ -34,22 +35,20 @@ $pdo->exec("
 ");
 */
 
+$password = password_hash('admin', PASSWORD_ARGON2ID);
 
-/*$pdo->exec("
-      INSERT INTO users (name, , due_date) VALUES ('Admin', 'admin@admin.com', 'admin', 1);
+
+$pdo->exec("
+      INSERT INTO users (name, email, password, role) VALUES ('Admin', 'admin', '$password', 'admin');
 ");
-*/
 
-#$stmt = $pdo->query('SELECT * FROM users');
-#var_dump($stmt->fetch(PDO::FETCH_ASSOC));
 
-#require_once 'vendor/autoload.php';
-
-#$user = new User('jonas', 'email', 1);
-#$user->setPassword('123123');
-
-#$task = new Task(1, 'Compras', 'Comprar arroz, feijao, massa, carne', '15/02/2025', 2, 'Casa');
-
-#$taskRepository = new TaskRepository($pdo);
-#$userRepository = new UserRepository($pdo);
-#var_dump($taskRepository->all());
+//$stmt = $pdo->query('SELECT * FROM users');
+//var_dump($stmt->fetch(PDO::FETCH_ASSOC));
+//require_once 'vendor/autoload.php';
+//$user = new User('jonas', 'email', 1);
+//$user->setPassword('123123');
+//$task = new Task(1, 'Compras', 'Comprar arroz, feijao, massa, carne', '15/02/2025', 2, 'Casa');
+//$taskRepository = new TaskRepository($pdo);
+//$userRepository = new UserRepository($pdo);
+//var_dump($taskRepository->all());

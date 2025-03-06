@@ -1,7 +1,7 @@
     <?php require_once 'Includes/header.php'; ?>
     <main class="dashboard">
         <aside class="sidebar">
-            <h3>Categories <span class="todo">Implementar filtros!</span></h3>
+            <h3>Categories <br><span class="todo">Not working...</span></h3>
             <ul>
                 <li><a href="#" class="active">All Tasks</a></li>
                 <li><a href="#">Work</a></li>

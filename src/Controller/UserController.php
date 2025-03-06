@@ -52,7 +52,12 @@ class UserController
         $id = $_GET['id'];
 
         if($this->userRepository->delete($id)){
-            header('Location: /home?sucesso=1');
+            if($_SESSION['role'] == 'admin'){
+                header('Location: /admin');
+                return;
+            }
+            
+            header('Location: /logout');
         } else {
             $this->errorMessages('Erro ao Deletar Usuário');
             header('Location /home');
