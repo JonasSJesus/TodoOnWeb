@@ -23,8 +23,8 @@
 
                 <?php foreach ($tasks as $task): ?>
                 <div class="task-card priority-<?= $task->priority; ?>">
-                    <h3><?= htmlentities($task->name); ?></h3>
-                    <p><?= htmlentities($task->description); ?></p>
+                    <h3><?= $task->name; ?></h3>
+                    <p><?= $task->description; ?></p>
                     <div class="task-meta">
                         <span class="category"><?= $task->category; ?></span>
                         <span class="due-date"><?= 'Due: ' . $task->getDueDate(); ?></span>

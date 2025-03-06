@@ -111,8 +111,7 @@ class AuthController
 
         try {
             $this->authService->updatePWD($request);
-            $this->errorMessages('Senha alterada com sucesso')
-                ->withHeader("Location: /edit-pwd");
+            $this->withHeader("Location: /profile");
 
         } catch (\Exception $e) {
             $this
