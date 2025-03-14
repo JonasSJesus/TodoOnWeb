@@ -32,46 +32,26 @@ class UserRepository
         }
     }
 
-    public function findByEmail(string $email): User|null
+    
+    /**
+     * This method allows to search dynamically by $params
+     * 
+     * @param mixed $params Can be either Id and Email, depends on controller needed
+     * @return void
+     */
+    public function findByAny(string $finder, string $params): ?User
     {
         try {
-            $stmt = $this->pdo->prepare(
-                'SELECT * FROM users WHERE email = ?;
-            ');
-            $stmt->bindValue(1, $email);
+            $stmt = $this->pdo->prepare("
+                SELECT * FROM users WHERE $finder = :params;
+            ");
+            $stmt->bindValue(':params', $params);
             $stmt->execute();
-    
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if(!$user){
-                return null;
-            }
+            $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            return $this->hydrateUser($user);         
-        } catch (PDOException $e) {
-            return null;
-        }
-/*
-        if (is_array($user)) {
-            return $this->hydrateUser($user);
-        } else {
-            return null;
-        }*/
-    }
-
-    public function findById(int $id): User|null
-    {
-        $stmt = $this->pdo->prepare('
-        SELECT * FROM users WHERE id = ?;
-        ');
-        $stmt->bindValue(1, $id);
-        $stmt->execute();
-
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($user) {
-            return $this->hydrateUser($user);
-        } else {
+            return $this->hydrateUser($data);
+        } catch (PDOException $th) {
             return null;
         }
     }
@@ -97,6 +77,33 @@ class UserRepository
         $user->setId($id);
 
         return $user;
+    }
+
+
+    public function update2(int $id, User $user = null, string $password = null): bool
+    {
+        $fieldsToChange = '';
+        if ($user) {
+            $fieldsToChange = "name = ?, email = ?";
+        }
+
+        if ($password) {
+            $fieldsToChange = "password = ?";
+        }
+
+        try {
+            $stmt = $this->pdo->prepare("
+                UPDATE users SET {$fieldsToChange} WHERE id = ?;
+            ");
+            
+            $stmt->bindValue(1, $user->name);
+            $stmt->bindVAlue(2, $user->email);
+            $stmt->bindValue(3, $id);
+
+            return $stmt->execute();
+        } catch (PDOException $th) {
+            return false;
+        }
     }
 
 

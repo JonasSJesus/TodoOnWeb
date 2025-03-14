@@ -34,7 +34,7 @@ class UserController
     {
         $id = $_SESSION['id'];
 
-        $user = $this->userRepository->findById($id);
+        $user = $this->userRepository->findByAny('id', $id);
         require_once __DIR__ . "/../../view/profile.php";
     }
 

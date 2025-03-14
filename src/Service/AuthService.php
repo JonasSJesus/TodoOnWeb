@@ -32,7 +32,7 @@ class AuthService
 
     public function authenticate(string $email, string $password): ?User
     {
-        $user = $this->userRepository->findByEmail($email);
+        $user = $this->userRepository->findByAny('email', $email);
         $dbPassword = password_hash(' ', PASSWORD_ARGON2ID);
 
         if ($user) {
